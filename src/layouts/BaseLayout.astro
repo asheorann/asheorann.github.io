@@ -1,0 +1,195 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Personal site of Anushka Sheoran' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <header id="header">
+      <div class="header-inner">
+        <a href="/" class="wordmark">anushka sheoran</a>
+        <nav>
+          <a href="/thinking">thinking</a>
+          <a href="/projects">projects</a>
+          <a href="/about">about</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <a href="mailto:hello@example.com">email</a>
+        <span>·</span>
+        <a href="https://github.com/asheorann" target="_blank" rel="noopener">github</a>
+        <span>·</span>
+        <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener">linkedin</a>
+        <span>·</span>
+        <a href="https://x.com/yourhandle" target="_blank" rel="noopener">x</a>
+      </div>
+    </footer>
+
+    <style>
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--header-height);
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+        z-index: 100;
+        transition: transform 200ms ease;
+      }
+
+      header.hide {
+        transform: translateY(-100%);
+      }
+
+      .header-inner {
+        max-width: var(--wide-width);
+        margin: 0 auto;
+        padding: 0 var(--space-2);
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .wordmark {
+        font-family: var(--font-sans);
+        font-weight: 500;
+        font-size: 1rem;
+        color: var(--text);
+        border: none;
+        text-transform: lowercase;
+      }
+
+      .wordmark:hover {
+        color: var(--accent);
+        border: none;
+      }
+
+      nav {
+        display: flex;
+        gap: 2rem;
+        font-family: var(--font-sans);
+        font-size: 0.9375rem;
+      }
+
+      nav a {
+        color: var(--text);
+        border: none;
+        text-transform: lowercase;
+        transition: color 200ms ease;
+      }
+
+      nav a:hover {
+        color: var(--accent);
+        border: none;
+      }
+
+      main {
+        margin-top: var(--header-height);
+        min-height: calc(100vh - var(--header-height) - 4rem);
+      }
+
+      footer {
+        border-top: 1px solid var(--border);
+        padding: var(--space-2) 0;
+        margin-top: var(--space-8);
+      }
+
+      .footer-inner {
+        max-width: var(--wide-width);
+        margin: 0 auto;
+        padding: 0 var(--space-2);
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+      }
+
+      footer a {
+        color: var(--muted);
+        border: none;
+      }
+
+      footer a:hover {
+        color: var(--accent);
+      }
+
+      footer span {
+        color: var(--muted);
+      }
+
+      @media (max-width: 768px) {
+        nav {
+          gap: 1.5rem;
+        }
+
+        .header-inner {
+          padding: 0 1.5rem;
+        }
+
+        .footer-inner {
+          padding: 0 1.5rem;
+          flex-wrap: wrap;
+        }
+      }
+
+      @media (max-width: 480px) {
+        nav {
+          gap: 1rem;
+          font-size: 0.875rem;
+        }
+
+        .wordmark {
+          font-size: 0.9375rem;
+        }
+      }
+    </style>
+
+    <script>
+      let lastScroll = 0;
+      const header = document.getElementById('header');
+
+      window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+
+        if (currentScroll <= 0) {
+          header?.classList.remove('hide');
+          return;
+        }
+
+        if (currentScroll > lastScroll && currentScroll > 100) {
+          // Scrolling down
+          header?.classList.add('hide');
+        } else {
+          // Scrolling up
+          header?.classList.remove('hide');
+        }
+
+        lastScroll = currentScroll;
+      });
+    </script>
+  </body>
+</html>

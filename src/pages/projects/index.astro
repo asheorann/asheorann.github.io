@@ -1,0 +1,160 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+const sortedProjects = allProjects.sort((a, b) => {
+  const aDate = a.data.endDate || a.data.startDate;
+  const bDate = b.data.endDate || b.data.startDate;
+  return bDate.getTime() - aDate.getTime();
+});
+---
+
+<BaseLayout title="Projects — Anushka Sheoran">
+  <div class="page-header">
+    <div class="container">
+      <h1>projects</h1>
+    </div>
+  </div>
+
+  <div class="container">
+    {sortedProjects.length > 0 ? (
+      <div class="project-list">
+        {sortedProjects.map(project => (
+          <article class="project-card">
+            <h2>
+              {project.data.link ? (
+                <a href={project.data.link} target="_blank" rel="noopener">{project.data.title}</a>
+              ) : (
+                <a href={`/projects/${project.slug}`}>{project.data.title}</a>
+              )}
+            </h2>
+            <div class="project-meta mono-lower muted">
+              <time>
+                {project.data.startDate.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short'
+                })}
+                {project.data.endDate && (
+                  <>
+                    {' — '}
+                    {project.data.endDate.toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short'
+                    })}
+                  </>
+                )}
+              </time>
+              <span class="separator">·</span>
+              <span class="tags">
+                {project.data.tags.map((tag, i) => (
+                  <>{i > 0 && ', '}{tag}</>
+                ))}
+              </span>
+            </div>
+            <p class="summary">{project.data.summary}</p>
+            {project.data.hoverDetail && (
+              <p class="hover-detail muted">{project.data.hoverDetail}</p>
+            )}
+          </article>
+        ))}
+      </div>
+    ) : (
+      <p class="muted">[No projects yet]</p>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: var(--space-4) 0 var(--space-2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-header h1 {
+    font-size: var(--text-3xl);
+    text-transform: lowercase;
+  }
+
+  .project-list {
+    padding: var(--space-4) 0;
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .project-card {
+    padding: var(--space-2);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    transition: border-color 200ms ease;
+  }
+
+  .project-card:hover {
+    border-color: var(--accent);
+  }
+
+  .project-card:hover .hover-detail {
+    max-height: 4rem;
+    margin-top: 0.75rem;
+    opacity: 1;
+  }
+
+  .project-card h2 {
+    font-size: var(--text-2xl);
+    margin-bottom: 0.75rem;
+  }
+
+  .project-card h2 a {
+    color: var(--text);
+    border: none;
+  }
+
+  .project-card h2 a:hover {
+    color: var(--accent);
+  }
+
+  .project-meta {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    align-items: baseline;
+  }
+
+  .separator {
+    color: var(--muted);
+  }
+
+  .tags {
+    color: var(--accent);
+  }
+
+  .summary {
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  .hover-detail {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 200ms ease, opacity 200ms ease, margin-top 200ms ease;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .page-header {
+      padding: var(--space-2) 0 var(--space-1);
+    }
+
+    .project-list {
+      padding: var(--space-2) 0;
+      gap: var(--space-1);
+    }
+
+    .hover-detail {
+      max-height: 4rem;
+      margin-top: 0.75rem;
+      opacity: 1;
+    }
+  }
+</style>

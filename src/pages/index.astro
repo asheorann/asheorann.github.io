@@ -1,0 +1,1429 @@
+---
+import HomeLayout from '../layouts/HomeLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allThoughts = await getCollection('thoughts');
+
+// Calculate reading time for each thought
+const thoughtsWithReadingTime = await Promise.all(
+  allThoughts.map(async (thought) => {
+    const { Content } = await thought.render();
+    const text = thought.body;
+    const words = text.split(/\s+/).length;
+    const readingTime = Math.ceil(words / 200); // 200 words per minute
+    return { ...thought, readingTime };
+  })
+);
+
+const recentThoughts = thoughtsWithReadingTime
+  .filter(t => !t.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+
+const allProjects = await getCollection('projects');
+const featuredProjects = allProjects
+  .filter(p => p.data.featured)
+  .slice(0, 4);
+---
+
+<HomeLayout title="Anushka Sheoran">
+  <div class="scroll-progress" id="scroll-progress"></div>
+  <div class="gradient-mesh"></div>
+
+  <!-- Cursor Light -->
+  <div class="cursor-light" id="cursor-light"></div>
+
+  <!-- Floating Elements -->
+  <div class="floating-elements">
+    <div class="float-circle float-1"></div>
+    <div class="float-circle float-2"></div>
+    <div class="float-circle float-3"></div>
+    <div class="float-circle float-4"></div>
+  </div>
+
+  <!-- Under Construction Banner -->
+  <div class="construction-banner">
+    <span class="mono-lower">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 0.5rem;">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+        <path d="M2 17l10 5 10-5"></path>
+        <path d="M2 12l10 5 10-5"></path>
+      </svg>
+      under construction
+    </span>
+  </div>
+
+  <div class="page-wrapper">
+    <!-- Hero Landing Section -->
+    <section class="hero-landing" id="hero-landing">
+      <div class="hero-landing-content">
+        <div class="profile-photo-large">
+          <img src="/images/profile/profile-photo.jpg" alt="Anushka Sheoran" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <span class="mono-lower muted" style="display: none;">[photo]</span>
+        </div>
+        <h1 class="hero-name-large">Anushka Sheoran</h1>
+        <p class="hero-tagline">
+          Master's student in computer science at Penn, previously bioinformatics at UCSD.
+        </p>
+        <div class="location-tag">
+          <span class="mono-lower">/currently in philadelphia</span>
+        </div>
+        <div class="scroll-indicator">
+          <span class="mono-lower muted">scroll to explore</span>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 4V16M10 16L4 10M10 16L16 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- Top Navigation -->
+    <nav class="top-nav" id="top-nav">
+      <div class="nav-left">
+        <button class="theme-toggle-nav" id="theme-toggle-nav" aria-label="Toggle dark mode">
+          <span class="theme-icon-nav">☾</span>
+        </button>
+        <a href="#home" class="nav-link active" data-tab="home">anushka sheoran</a>
+      </div>
+      <div class="nav-right">
+        <a href="#thinking" class="nav-link" data-tab="thinking">thinking</a>
+        <a href="#projects" class="nav-link" data-tab="projects">projects</a>
+        <button class="pin-toggle" id="pin-toggle" aria-label="Pin navigation" title="Pin navigation">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <div class="layout">
+      <!-- Left Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-content">
+          <div class="timeline-section">
+            <p class="section-marker mono-lower muted">academic journey</p>
+            <div class="timeline">
+              <div class="timeline-step">
+                <div class="timeline-dot">
+                  <img src="/images/logos/highschool-logo.png" alt="High School" class="timeline-logo" onerror="this.style.display='none'">
+                </div>
+                <span class="timeline-label">high school in canada</span>
+              </div>
+              <div class="timeline-line"></div>
+              <div class="timeline-step">
+                <div class="timeline-dot">
+                  <img src="/images/logos/ucsd-logo.png" alt="UCSD" class="timeline-logo" onerror="this.style.display='none'">
+                </div>
+                <span class="timeline-label">ucsd bioinformatics</span>
+              </div>
+              <div class="timeline-line"></div>
+              <div class="timeline-step">
+                <div class="timeline-dot active">
+                  <img src="/images/logos/penn-logo.png" alt="Penn" class="timeline-logo timeline-logo-penn" onerror="this.style.display='none'">
+                </div>
+                <span class="timeline-label">university of pennsylvania cs</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="now-section">
+            <p class="section-marker mono-lower muted">top of mind</p>
+            <ul class="now-list">
+              <li>wrapping up CIS 700 final on multi-turn safety degradation</li>
+              <li>building Clariem's pharma forecasting platform</li>
+              <li>mentoring through Curious Cardinals</li>
+              <li>job searching, AI evaluation focus</li>
+            </ul>
+          </div>
+
+          <div class="contact-section">
+            <a href="mailto:asheoran@seas.upenn.edu" class="contact-link">email</a>
+            <a href="https://github.com/asheorann" target="_blank" rel="noopener" class="contact-link">github</a>
+            <a href="https://www.linkedin.com/in/anushka-sheoran" target="_blank" rel="noopener" class="contact-link">linkedin</a>
+          </div>
+
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+
+        <!-- Default Home View -->
+        <section class="tab-section" id="home-view">
+          <div class="intro-full">
+            <p>
+              I work on AI evaluation in clinical settings, currently focused on how multi-turn medical conversations degrade the safety behavior of language models. Outside of school I work at Clariem, an AI consulting firm in pharma and life sciences, and I run the Claude Builder Club at Penn. I enjoy learning about how our world works more broadly (because it's fun...) and because it helps me identify places of meaningful impact.
+            </p>
+          </div>
+
+          <h2 class="section-heading mono-lower">selected projects</h2>
+          {featuredProjects.length > 0 ? (
+            <div class="project-grid">
+              {featuredProjects.map(project => (
+                <article class="project-card">
+                  {project.data.coverImage && (
+                    <div class="project-image">
+                      <img src={project.data.coverImage} alt={project.data.title} />
+                    </div>
+                  )}
+                  <div class="project-content">
+                    <div class="project-header">
+                      <h3>
+                        {project.data.link ? (
+                          <a href={project.data.link} target="_blank" rel="noopener">{project.data.title}</a>
+                        ) : (
+                          <a href={`/projects/${project.slug}`}>{project.data.title}</a>
+                        )}
+                      </h3>
+                      <div class="project-tags">
+                        {project.data.tags.map(tag => (
+                          <span class="tag">{tag}</span>
+                        ))}
+                      </div>
+                    </div>
+                    <p class="project-summary">{project.data.summary}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <p class="muted">[No projects yet]</p>
+          )}
+
+          <h2 class="section-heading mono-lower" style="margin-top: 3rem;">community</h2>
+          <div class="community-section">
+            <ul class="community-list">
+              <li>Mentoring high school students through Curious Cardinals</li>
+              <li>Running the Claude Builder Club at Penn</li>
+              <li>Exploring AI development and building projects together</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Thinking Tab -->
+        <section class="tab-section" id="thinking" style="display: none;">
+          <h2 class="section-heading mono-lower">recent thinking</h2>
+          {recentThoughts.length > 0 ? (
+            <div class="thought-list">
+              {recentThoughts.map(thought => (
+                <article class="thought-card">
+                  <div class="thought-meta">
+                    <time class="mono-lower muted">
+                      {thought.data.date.toLocaleDateString('en-US', {
+                        month: 'short',
+                        year: 'numeric'
+                      })}
+                    </time>
+                    <span class="reading-time mono-lower muted">
+                      {thought.readingTime} min read
+                    </span>
+                    <span class="status-badge mono-lower">
+                      {thought.data.status}
+                    </span>
+                  </div>
+                  <h3>
+                    <a href={`/thinking/${thought.slug}`}>{thought.data.title}</a>
+                  </h3>
+                  <p class="excerpt">{thought.data.excerpt}</p>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <p class="muted">[No posts yet]</p>
+          )}
+        </section>
+
+        <!-- Projects Tab -->
+        <section class="tab-section" id="projects" style="display: none;">
+          <h2 class="section-heading mono-lower">all projects</h2>
+          {allProjects.length > 0 ? (
+            <div class="project-grid">
+              {allProjects.map(project => (
+                <article class="project-card">
+                  {project.data.coverImage && (
+                    <div class="project-image">
+                      <img src={project.data.coverImage} alt={project.data.title} />
+                    </div>
+                  )}
+                  <div class="project-content">
+                    <div class="project-header">
+                      <h3>
+                        {project.data.link ? (
+                          <a href={project.data.link} target="_blank" rel="noopener">{project.data.title}</a>
+                        ) : (
+                          <a href={`/projects/${project.slug}`}>{project.data.title}</a>
+                        )}
+                      </h3>
+                      <div class="project-tags">
+                        {project.data.tags.map(tag => (
+                          <span class="tag">{tag}</span>
+                        ))}
+                      </div>
+                    </div>
+                    <p class="project-summary">{project.data.summary}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <p class="muted">[No projects yet]</p>
+          )}
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const themeToggleNav = document.getElementById('theme-toggle-nav');
+    const sidebar = document.querySelector('.sidebar');
+    const scrollProgress = document.getElementById('scroll-progress');
+    const topNav = document.getElementById('top-nav');
+    const heroLanding = document.getElementById('hero-landing');
+    const pinToggle = document.getElementById('pin-toggle');
+    const cursorLight = document.getElementById('cursor-light');
+
+    let currentTab = 'home';
+    let isNavPinned = false;
+
+    // Cursor light effect
+    document.addEventListener('mousemove', (e) => {
+      if (cursorLight) {
+        cursorLight.style.left = e.clientX + 'px';
+        cursorLight.style.top = e.clientY + 'px';
+      }
+    });
+
+    // Pin toggle functionality
+    pinToggle?.addEventListener('click', () => {
+      isNavPinned = !isNavPinned;
+      if (isNavPinned) {
+        pinToggle.classList.add('active');
+        topNav?.classList.add('pinned');
+        pinToggle.setAttribute('title', 'Unpin navigation');
+      } else {
+        pinToggle.classList.remove('active');
+        topNav?.classList.remove('pinned');
+        pinToggle.setAttribute('title', 'Pin navigation');
+      }
+    });
+
+    // Scroll handling
+    window.addEventListener('scroll', () => {
+      const scrollY = window.pageYOffset;
+      const heroHeight = heroLanding ? heroLanding.offsetHeight : 0;
+
+      // Show navigation when scrolled past hero (only on home tab) or when pinned
+      if (topNav) {
+        if (isNavPinned) {
+          // Always visible when pinned
+          topNav.classList.add('visible');
+        } else if (currentTab === 'home') {
+          // Normal scroll behavior on home
+          if (scrollY > heroHeight - 100) {
+            topNav.classList.add('visible');
+            // Trigger sidebar and home view animations when nav appears
+            if (sidebar && !sidebar.classList.contains('animate')) {
+              sidebar.classList.add('animate');
+            }
+            if (homeView && !homeView.classList.contains('animate')) {
+              homeView.classList.add('animate');
+            }
+          } else {
+            topNav.classList.remove('visible');
+          }
+        }
+      }
+
+      // Update scroll progress indicator
+      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (scrollY / windowHeight) * 100;
+      if (scrollProgress) {
+        scrollProgress.style.width = scrolled + '%';
+      }
+    });
+
+    // Tab switching
+    const navLinks = document.querySelectorAll('.nav-link');
+    const homeView = document.getElementById('home-view');
+    const thinkingSection = document.getElementById('thinking');
+    const projectsSection = document.getElementById('projects');
+    const mainContent = document.querySelector('.main-content');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Update active link
+        navLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+
+        // Show corresponding section
+        const tabName = link.getAttribute('data-tab');
+        currentTab = tabName!;
+
+        if (tabName === 'home') {
+          // Show hero landing and scroll to top
+          if (heroLanding) heroLanding.style.display = 'flex';
+          homeView!.style.display = 'block';
+          thinkingSection!.style.display = 'none';
+          projectsSection!.style.display = 'none';
+          sidebar!.style.display = 'block';
+          mainContent!.classList.remove('full-width');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+
+          // Hide nav initially, will show on scroll
+          topNav!.classList.remove('visible');
+        } else if (tabName === 'thinking') {
+          // Hide hero landing
+          if (heroLanding) heroLanding.style.display = 'none';
+          homeView!.style.display = 'none';
+          thinkingSection!.style.display = 'block';
+          projectsSection!.style.display = 'none';
+          sidebar!.style.display = 'none';
+          mainContent!.classList.add('full-width');
+          topNav!.classList.add('visible');
+
+          // Trigger animations
+          thinkingSection!.classList.remove('animate');
+          setTimeout(() => {
+            thinkingSection!.classList.add('animate');
+          }, 10);
+        } else if (tabName === 'projects') {
+          // Hide hero landing
+          if (heroLanding) heroLanding.style.display = 'none';
+          homeView!.style.display = 'none';
+          thinkingSection!.style.display = 'none';
+          projectsSection!.style.display = 'block';
+          sidebar!.style.display = 'none';
+          mainContent!.classList.add('full-width');
+          topNav!.classList.add('visible');
+
+          // Trigger animations
+          projectsSection!.classList.remove('animate');
+          setTimeout(() => {
+            projectsSection!.classList.add('animate');
+          }, 10);
+        }
+      });
+    });
+
+    // Theme toggle
+    const getTheme = () => localStorage.getItem('theme') || 'light';
+    const setTheme = (theme) => {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      if (themeToggleNav) {
+        themeToggleNav.querySelector('.theme-icon-nav').textContent = theme === 'dark' ? '☀' : '☾';
+      }
+    };
+
+    // Initialize theme
+    setTheme(getTheme());
+
+    // Toggle theme
+    themeToggleNav?.addEventListener('click', () => {
+      const currentTheme = getTheme();
+      setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    });
+  </script>
+</HomeLayout>
+
+<style>
+  .page-wrapper {
+    width: 100%;
+    position: relative;
+  }
+
+  /* Gradient Mesh Background */
+  .gradient-mesh {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.35;
+    background:
+      radial-gradient(at 20% 30%, rgba(168, 181, 217, 0.15) 0px, rgba(168, 181, 217, 0.08) 30%, transparent 60%),
+      radial-gradient(at 80% 20%, rgba(168, 181, 217, 0.12) 0px, rgba(168, 181, 217, 0.06) 30%, transparent 60%),
+      radial-gradient(at 40% 80%, rgba(184, 168, 201, 0.1) 0px, rgba(184, 168, 201, 0.05) 30%, transparent 60%),
+      radial-gradient(at 90% 70%, rgba(168, 181, 217, 0.1) 0px, rgba(168, 181, 217, 0.04) 30%, transparent 60%);
+    animation: meshShift 20s ease-in-out infinite;
+    transition: opacity 400ms ease;
+    filter: blur(2px);
+  }
+
+  [data-theme="dark"] .gradient-mesh {
+    opacity: 0.2;
+    background:
+      radial-gradient(at 20% 30%, rgba(168, 181, 217, 0.08) 0px, transparent 50%),
+      radial-gradient(at 80% 20%, rgba(168, 181, 217, 0.06) 0px, transparent 50%),
+      radial-gradient(at 40% 80%, rgba(184, 168, 201, 0.05) 0px, transparent 50%),
+      radial-gradient(at 90% 70%, rgba(168, 181, 217, 0.05) 0px, transparent 50%);
+  }
+
+  @keyframes meshShift {
+    0%, 100% {
+      transform: translate(0, 0);
+    }
+    33% {
+      transform: translate(2%, -2%);
+    }
+    66% {
+      transform: translate(-2%, 2%);
+    }
+  }
+
+  /* Floating Elements */
+  .floating-elements {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .float-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.45;
+    filter: blur(60px);
+  }
+
+  .float-1 {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(168, 181, 217, 0.3) 0%, rgba(168, 181, 217, 0.15) 50%, transparent 100%);
+    top: 10%;
+    right: 15%;
+    animation: float1 25s ease-in-out infinite;
+  }
+
+  .float-2 {
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(184, 168, 201, 0.28) 0%, rgba(184, 168, 201, 0.12) 50%, transparent 100%);
+    bottom: 15%;
+    left: 10%;
+    animation: float2 30s ease-in-out infinite;
+  }
+
+  .float-3 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(168, 181, 217, 0.25) 0%, rgba(168, 181, 217, 0.1) 50%, transparent 100%);
+    top: 50%;
+    left: 5%;
+    animation: float3 35s ease-in-out infinite;
+  }
+
+  .float-4 {
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(184, 168, 201, 0.32) 0%, rgba(184, 168, 201, 0.14) 50%, transparent 100%);
+    bottom: 25%;
+    right: 20%;
+    animation: float4 28s ease-in-out infinite;
+  }
+
+  @keyframes float1 {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    33% {
+      transform: translate(-30px, 40px) scale(1.1);
+    }
+    66% {
+      transform: translate(40px, -30px) scale(0.9);
+    }
+  }
+
+  @keyframes float2 {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(50px, -50px) scale(1.15);
+    }
+  }
+
+  @keyframes float3 {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    33% {
+      transform: translate(40px, -20px) scale(0.85);
+    }
+    66% {
+      transform: translate(-20px, 40px) scale(1.1);
+    }
+  }
+
+  @keyframes float4 {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    25% {
+      transform: translate(-40px, -30px) scale(1.05);
+    }
+    75% {
+      transform: translate(30px, 40px) scale(0.95);
+    }
+  }
+
+  [data-theme="dark"] .float-circle {
+    opacity: 0.25;
+  }
+
+  /* Cursor Light */
+  .cursor-light {
+    position: fixed;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(108, 121, 157, 0.12) 0%, rgba(124, 108, 141, 0.08) 35%, rgba(108, 121, 157, 0.05) 60%, transparent 80%);
+    pointer-events: none;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    transition: opacity 300ms ease, background 300ms ease, filter 300ms ease;
+    opacity: 0;
+    mix-blend-mode: darken;
+    filter: blur(25px);
+  }
+
+  [data-theme="dark"] .cursor-light {
+    background: radial-gradient(circle, rgba(168, 181, 217, 0.22) 0%, rgba(184, 168, 201, 0.16) 30%, rgba(168, 181, 217, 0.1) 50%, transparent 75%);
+    mix-blend-mode: lighten;
+    filter: blur(30px);
+  }
+
+  @media (hover: hover) {
+    .cursor-light {
+      opacity: 1;
+    }
+  }
+
+  /* Construction Banner */
+  .construction-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(232, 181, 99, 0.15);
+    border-bottom: 1px solid rgba(232, 181, 99, 0.3);
+    backdrop-filter: blur(10px);
+    padding: 0.5rem;
+    text-align: center;
+    z-index: 1001;
+    animation: fadeInDown 600ms ease forwards;
+  }
+
+  .construction-banner span {
+    color: #D4941E;
+    font-size: 0.8125rem;
+  }
+
+  [data-theme="dark"] .construction-banner {
+    background: rgba(232, 181, 99, 0.1);
+    border-bottom: 1px solid rgba(232, 181, 99, 0.2);
+  }
+
+  /* Scroll Progress Indicator */
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent-secondary) 100%);
+    z-index: 1002;
+    transition: width 100ms ease-out;
+    box-shadow: 0 0 10px var(--accent);
+  }
+
+  /* Intro Section */
+  .intro-full {
+    margin-bottom: 3rem;
+    padding: 1.5rem;
+    background: var(--surface);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  #home-view.animate .intro-full {
+    animation: fadeInUp 800ms ease forwards;
+    animation-delay: 200ms;
+  }
+
+  .intro-full p {
+    line-height: 1.6;
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  /* Hero Landing Section */
+  .hero-landing {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding-top: 8rem;
+  }
+
+  .hero-landing-content {
+    text-align: center;
+    max-width: 800px;
+    padding: 2rem;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1000ms ease forwards;
+    animation-delay: 300ms;
+  }
+
+  .profile-photo-large {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2.5rem;
+    transition: border-color 300ms ease, transform 300ms ease, box-shadow 300ms ease;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .profile-photo-large img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profile-photo-large:hover {
+    border-color: var(--accent);
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .hero-name-large {
+    font-family: var(--font-display);
+    font-size: 4.5rem;
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 25%, #5a6d8a 50%, var(--accent) 75%, var(--accent-secondary) 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 8s ease infinite;
+  }
+
+  [data-theme="dark"] .hero-name-large {
+    background: linear-gradient(135deg, #95a5b8 0%, var(--accent) 40%, var(--accent-secondary) 100%);
+    background-size: 200% 200%;
+  }
+
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .hero-tagline {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--text);
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+  }
+
+  .location-tag {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 3rem;
+  }
+
+  .location-tag span {
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+
+  .scroll-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted);
+    animation: bounce 3s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(8px); opacity: 0.6; }
+  }
+
+  /* Top Navigation */
+  .top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 2rem 4rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 2.5rem;
+    background: var(--bg);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 300ms ease, transform 300ms ease, background 200ms ease, top 200ms ease;
+    pointer-events: none;
+  }
+
+  .top-nav.visible {
+    opacity: 0.98;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+
+  .top-nav.pinned {
+    position: fixed;
+    top: 2.5rem !important;
+    left: 0;
+    right: 0;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .nav-left {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .nav-right {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .pin-toggle {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.375rem;
+    cursor: pointer;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 200ms ease, border-color 200ms ease, background 200ms ease;
+  }
+
+  .pin-toggle:hover {
+    color: var(--text);
+    border-color: var(--accent);
+  }
+
+  .pin-toggle.active {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: rgba(168, 181, 217, 0.1);
+  }
+
+  .pin-toggle.active svg {
+    transform: rotate(45deg);
+    transition: transform 200ms ease;
+  }
+
+  .pin-toggle svg {
+    transition: transform 200ms ease;
+  }
+
+  @keyframes fadeInDown {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Layout */
+  .layout {
+    display: flex;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 4rem 6rem;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
+  }
+
+  .sidebar-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .sidebar-content > * {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  .sidebar.animate .sidebar-content > * {
+    animation: fadeInLeft 600ms ease forwards;
+  }
+
+  .sidebar.animate .sidebar-content > *:nth-child(1) { animation-delay: 100ms; }
+  .sidebar.animate .sidebar-content > *:nth-child(2) { animation-delay: 200ms; }
+  .sidebar.animate .sidebar-content > *:nth-child(3) { animation-delay: 300ms; }
+  .sidebar.animate .sidebar-content > *:nth-child(4) { animation-delay: 400ms; }
+
+  @keyframes fadeInLeft {
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+
+  .section-marker {
+    font-size: 0.8125rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Timeline */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .timeline-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .timeline-dot {
+    width: 32px;
+    height: 32px;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: border-color 200ms ease;
+  }
+
+  .timeline-dot.active {
+    border-color: var(--accent);
+    border-width: 2px;
+  }
+
+  .timeline-logo {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+  }
+
+  .timeline-logo-penn {
+    width: 30px;
+    height: 30px;
+  }
+
+  .timeline-label {
+    font-size: 0.9375rem;
+    line-height: 1.4;
+  }
+
+  .timeline-line {
+    width: 2px;
+    height: 20px;
+    background: var(--border);
+    margin-left: 15px;
+  }
+
+  /* Top of Mind */
+  .now-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .now-list li {
+    font-size: 0.9375rem;
+    line-height: 1.4;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .now-list li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: bold;
+  }
+
+  /* Contact */
+  .contact-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .contact-link {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--muted);
+    text-decoration: none;
+    border: none;
+    transition: color 200ms ease;
+  }
+
+  .contact-link:hover {
+    color: var(--accent);
+    border: none;
+  }
+
+  /* Theme Toggle in Nav */
+  .theme-toggle-nav {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.125rem;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    transition: color 200ms ease, transform 200ms ease;
+    line-height: 1;
+  }
+
+  .theme-toggle-nav:hover {
+    color: var(--accent);
+    transform: scale(1.1);
+  }
+
+  .theme-icon-nav {
+    display: block;
+    line-height: 1;
+  }
+
+  /* Main Content */
+  .main-content {
+    flex: 1;
+    max-width: 720px;
+  }
+
+  /* When sidebar is hidden (thinking/projects pages) */
+  .main-content.full-width {
+    max-width: 650px;
+    margin: 0 auto;
+  }
+
+  .tab-section {
+    animation: fadeIn 200ms ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+
+  .community-section {
+    padding: 1.5rem;
+    background: var(--surface);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  #home-view.animate .community-section {
+    animation: fadeInUp 600ms ease forwards;
+    animation-delay: 1100ms;
+  }
+
+  .community-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .community-list li {
+    font-size: 0.9375rem;
+    line-height: 1.4;
+    padding-left: 1rem;
+    position: relative;
+    margin: 0;
+  }
+
+  .community-list li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: bold;
+  }
+
+
+  .nav-link {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    border: none;
+    transition: color 200ms ease;
+  }
+
+  .nav-link:hover {
+    color: var(--text);
+    border: none;
+  }
+
+  .nav-link.active {
+    color: var(--accent);
+    border: none;
+  }
+
+  .section-heading {
+    font-size: 1rem;
+    margin-bottom: 1.25rem;
+    margin-top: 3rem;
+    color: var(--muted);
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+
+  #home-view.animate .section-heading {
+    animation: fadeInLeft 500ms ease forwards;
+  }
+
+  #home-view.animate .section-heading:first-of-type {
+    margin-top: 0;
+    animation-delay: 600ms;
+  }
+
+  #home-view.animate .section-heading:nth-of-type(2) {
+    animation-delay: 1000ms;
+  }
+
+  /* Thinking Cards */
+  .thought-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .thought-card {
+    background: var(--surface);
+    padding: 1.5rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  #thinking.animate .thought-card {
+    animation: fadeInUp 600ms ease forwards;
+  }
+
+  #thinking.animate .thought-card:nth-child(1) { animation-delay: 100ms; }
+  #thinking.animate .thought-card:nth-child(2) { animation-delay: 200ms; }
+  #thinking.animate .thought-card:nth-child(3) { animation-delay: 300ms; }
+  #thinking.animate .thought-card:nth-child(4) { animation-delay: 400ms; }
+  #thinking.animate .thought-card:nth-child(5) { animation-delay: 500ms; }
+
+  .thought-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .thought-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    align-items: center;
+  }
+
+  .thought-meta time {
+    font-size: 0.8125rem;
+  }
+
+  .reading-time {
+    font-size: 0.8125rem;
+  }
+
+  .reading-time::before {
+    content: '·';
+    margin: 0 0.5rem;
+    color: var(--border);
+  }
+
+  .status-badge {
+    background: var(--card-bg);
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: var(--accent);
+  }
+
+  .thought-card h3 {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  .thought-card h3 a {
+    color: var(--text);
+    border: none;
+    transition: color 200ms ease;
+  }
+
+  .thought-card h3 a:hover {
+    color: var(--accent);
+  }
+
+  .excerpt {
+    color: var(--muted);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  /* Project Cards */
+  .project-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .project-card {
+    background: var(--surface);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+    opacity: 0;
+    transform: translateY(20px);
+    overflow: hidden;
+  }
+
+  .project-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: var(--card-bg);
+  }
+
+  .project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 300ms ease;
+  }
+
+  .project-card:hover .project-image img {
+    transform: scale(1.05);
+  }
+
+  .project-content {
+    padding: 1.5rem;
+  }
+
+  #home-view.animate .project-card {
+    animation: fadeInUp 600ms ease forwards;
+  }
+
+  #home-view.animate .project-card:nth-child(1) { animation-delay: 700ms; }
+  #home-view.animate .project-card:nth-child(2) { animation-delay: 800ms; }
+  #home-view.animate .project-card:nth-child(3) { animation-delay: 900ms; }
+  #home-view.animate .project-card:nth-child(4) { animation-delay: 1000ms; }
+
+  /* Projects page animations */
+  #projects.animate .project-card {
+    animation: fadeInUp 600ms ease forwards;
+  }
+
+  #projects.animate .project-card:nth-child(1) { animation-delay: 100ms; }
+  #projects.animate .project-card:nth-child(2) { animation-delay: 200ms; }
+  #projects.animate .project-card:nth-child(3) { animation-delay: 300ms; }
+  #projects.animate .project-card:nth-child(4) { animation-delay: 400ms; }
+  #projects.animate .project-card:nth-child(5) { animation-delay: 500ms; }
+  #projects.animate .project-card:nth-child(6) { animation-delay: 600ms; }
+  #projects.animate .project-card:nth-child(7) { animation-delay: 700ms; }
+  #projects.animate .project-card:nth-child(8) { animation-delay: 800ms; }
+  #projects.animate .project-card:nth-child(9) { animation-delay: 900ms; }
+
+  .project-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  }
+
+  .project-header {
+    margin-bottom: 0.75rem;
+  }
+
+  .project-card:has(.project-image) .project-content {
+    padding-top: 1.25rem;
+  }
+
+  .project-card h3 {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  .project-card h3 a {
+    color: var(--text);
+    border: none;
+    transition: color 200ms ease;
+  }
+
+  .project-card h3 a:hover {
+    color: var(--accent-secondary);
+  }
+
+  .project-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    background: var(--card-bg);
+    color: var(--accent);
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+  }
+
+  .project-summary {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  /* Mobile */
+  @media (max-width: 1024px) {
+    .hero-name-large {
+      font-size: 3rem;
+    }
+
+    .hero-tagline {
+      font-size: 1.125rem;
+    }
+
+    .profile-photo-large {
+      width: 140px;
+      height: 140px;
+    }
+
+    .top-nav {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 2rem 1.5rem 1.5rem;
+    }
+
+    .nav-right {
+      width: 100%;
+      justify-content: flex-start;
+    }
+
+    .layout {
+      flex-direction: column;
+      padding: 2rem 1.5rem;
+      gap: 3rem;
+    }
+
+    .sidebar {
+      position: static;
+      width: 100%;
+    }
+
+    .sidebar-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .timeline-section {
+      grid-column: 1 / -1;
+    }
+
+    .main-content {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-name-large {
+      font-size: 2.5rem;
+    }
+
+    .hero-tagline {
+      font-size: 1rem;
+    }
+
+    .profile-photo-large {
+      width: 120px;
+      height: 120px;
+    }
+
+    .sidebar-content {
+      grid-template-columns: 1fr;
+    }
+
+    .thought-card,
+    .project-card {
+      padding: 1.25rem;
+    }
+  }
+</style>
+</HomeLayout>

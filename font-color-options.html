@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font & Color Options</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&family=Cormorant+Garamond:wght@600;700&family=Space+Grotesk:wght@500;600&family=DM+Serif+Display&family=Fraunces:wght@600;700&family=Bitter:wght@600;700&family=Outfit:wght@500;600&family=Archivo:wght@500;600&family=Manrope:wght@600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f9f9f7;
+            color: #1a1a1a;
+            font-family: Inter, sans-serif;
+            padding: 3rem;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .note {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: #888;
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 4rem 0 2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e5e3dd;
+        }
+
+        .font-grid {
+            display: grid;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .font-option {
+            background: white;
+            padding: 2.5rem;
+            border: 1px solid #e5e3dd;
+        }
+
+        .font-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #888;
+            margin-bottom: 1.5rem;
+        }
+
+        .name-display {
+            font-size: 4.5rem;
+            font-weight: 600;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+
+        .font-note {
+            font-size: 0.9375rem;
+            color: #888;
+            margin-top: 1rem;
+        }
+
+        /* Font styles */
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        .font-cormorant { font-family: 'Cormorant Garamond', serif; }
+        .font-space { font-family: 'Space Grotesk', sans-serif; }
+        .font-dm { font-family: 'DM Serif Display', serif; }
+        .font-fraunces { font-family: 'Fraunces', serif; }
+        .font-bitter { font-family: 'Bitter', serif; }
+        .font-outfit { font-family: 'Outfit', sans-serif; }
+        .font-archivo { font-family: 'Archivo', sans-serif; }
+        .font-manrope { font-family: 'Manrope', sans-serif; }
+        .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        /* Color palettes */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .color-palette {
+            background: white;
+            padding: 2rem;
+            border: 1px solid #e5e3dd;
+        }
+
+        .palette-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            color: #888;
+        }
+
+        .color-swatches {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .swatch {
+            width: 60px;
+            height: 60px;
+            border-radius: 4px;
+            border: 1px solid #e5e3dd;
+        }
+
+        .color-demo {
+            padding: 1.5rem;
+            border-radius: 4px;
+        }
+
+        .color-demo h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .color-demo p {
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .color-demo .label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+        }
+
+        /* Palette 1: Current (Pastel Marigold) */
+        .palette-1 { background: #f9f9f7; }
+        .palette-1 .color-demo { background: #f9f9f7; }
+        .palette-1 h3 { color: #E8B563; }
+        .palette-1 a { color: #E8B563; border-bottom: 1px solid #E8B563; text-decoration: none; }
+        .palette-1 .label { color: #E8B563; }
+
+        /* Palette 2: Soft Coral & Sage */
+        .palette-2 { background: #faf9f7; }
+        .palette-2 .color-demo { background: #faf9f7; }
+        .palette-2 h3 { color: #E8A598; }
+        .palette-2 a { color: #E8A598; border-bottom: 1px solid #E8A598; text-decoration: none; }
+        .palette-2 .label { color: #9CAF88; }
+
+        /* Palette 3: Terracotta & Clay */
+        .palette-3 { background: #f9f8f6; }
+        .palette-3 .color-demo { background: #f9f8f6; }
+        .palette-3 h3 { color: #C9704A; }
+        .palette-3 a { color: #C9704A; border-bottom: 1px solid #C9704A; text-decoration: none; }
+        .palette-3 .label { color: #C9976B; }
+
+        /* Palette 4: Dusty Rose & Plum */
+        .palette-4 { background: #faf8f9; }
+        .palette-4 .color-demo { background: #faf8f9; }
+        .palette-4 h3 { color: #D4A5A5; }
+        .palette-4 a { color: #D4A5A5; border-bottom: 1px solid #D4A5A5; text-decoration: none; }
+        .palette-4 .label { color: #9B7B8E; }
+
+        /* Palette 5: Soft Lavender & Periwinkle */
+        .palette-5 { background: #f8f9fa; }
+        .palette-5 .color-demo { background: #f8f9fa; }
+        .palette-5 h3 { color: #A8B5D9; }
+        .palette-5 a { color: #A8B5D9; border-bottom: 1px solid #A8B5D9; text-decoration: none; }
+        .palette-5 .label { color: #B8A8C9; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Font & Color Options</h1>
+        <p class="note">Pick a font for your name and a color palette</p>
+
+        <!-- FONT OPTIONS -->
+        <h2>Font Options for Your Name</h2>
+
+        <div class="font-grid">
+            <div class="font-option">
+                <div class="font-label">Option 1: Playfair Display</div>
+                <div class="name-display font-playfair">Anushka Sheoran</div>
+                <p class="font-note"><strong>Feel:</strong> Classic editorial, high contrast. Elegant but approachable. Think Vogue meets thoughtful essay.</p>
+            </div>
+
+            <div class="font-option">
+                <div class="font-label">Option 2: Cormorant Garamond</div>
+                <div class="name-display font-cormorant">Anushka Sheoran</div>
+                <p class="font-note"><strong>Feel:</strong> Light, airy, slightly romantic. More delicate than Playfair. Good if you want softness.</p>
+            </div>
+
+            <div class="font-option">
+                <div class="font-label">Option 3: Space Grotesk</div>
+                <div class="name-display font-space">Anushka Sheoran</div>
+                <p class="font-note"><strong>Feel:</strong> Modern, geometric, quirky. Technical but friendly. Good for tech/research vibe.</p>
+            </div>
+
+            <div class="font-option">
+                <div class="font-label">Option 4: DM Serif Display</div>
+                <div class="name-display font-dm">Anushka Sheoran</div>
+                <p class="font-note"><strong>Feel:</strong> Bold, confident, display serif. Strong presence without being aggressive.</p>
+            </div>
+
+            <div class="font-option">
+                <div class="font-label">Option 5: Fraunces</div>
+                <div class="name-display font-fraunces">Anushka Sheoran</div>
+                <p class="font-note"><strong>Feel:</strong> Soft, rounded, warm. Variable serif with personality. Approachable and distinctive.</p>
+            </div>
+
+            <div class="font-option">
+                <div class="font-label">Option 6: Bitter</div>
+                <div class="name-display font-bitter">Anushka Sheoran</div>
+                <p class="font-note"><strong>Feel:</strong> Contemporary serif, slightly condensed. Professional but not stiff.</p>
+            </div>
+
+            <div class="font-option">
+                <div class="font-label">Option 7: Outfit</div>
+                <div class="name-display font-outfit">Anushka Sheoran</div>
+                <p class="font-note"><strong>Feel:</strong> Clean, modern sans. Rounded edges. Friendly and open without being casual.</p>
+            </div>
+
+            <div class="font-option">
+                <div class="font-label">Option 8: Archivo</div>
+                <div class="name-display font-archivo">Anushka Sheoran</div>
+                <p class="font-note"><strong>Feel:</strong> Grotesque sans, slightly narrow. Technical, precise. Good for research-forward presence.</p>
+            </div>
+
+            <div class="font-option">
+                <div class="font-label">Option 9: Manrope</div>
+                <div class="name-display font-manrope">Anushka Sheoran</div>
+                <p class="font-note"><strong>Feel:</strong> Geometric sans with warmth. Modern, balanced. Safe but distinctive choice.</p>
+            </div>
+
+            <div class="font-option">
+                <div class="font-label">Option 10: Plus Jakarta Sans</div>
+                <div class="name-display font-jakarta">Anushka Sheoran</div>
+                <p class="font-note"><strong>Feel:</strong> Soft geometric sans. Friendly, approachable. Good for human-centered work vibe.</p>
+            </div>
+        </div>
+
+        <!-- COLOR PALETTES -->
+        <h2>Color Palette Options</h2>
+
+        <div class="color-grid">
+            <div class="color-palette palette-1">
+                <div class="palette-name">Current: Pastel Marigold</div>
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #E8B563;"></div>
+                    <div class="swatch" style="background: #D4941E;"></div>
+                </div>
+                <div class="color-demo">
+                    <h3>Heading Text</h3>
+                    <p>Body text with an <a href="#">inline link</a> for context.</p>
+                    <p class="label">[metadata label]</p>
+                </div>
+            </div>
+
+            <div class="color-palette palette-2">
+                <div class="palette-name">Soft Coral & Sage</div>
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #E8A598;"></div>
+                    <div class="swatch" style="background: #9CAF88;"></div>
+                </div>
+                <div class="color-demo">
+                    <h3>Heading Text</h3>
+                    <p>Body text with an <a href="#">inline link</a> for context.</p>
+                    <p class="label">[metadata label]</p>
+                </div>
+            </div>
+
+            <div class="color-palette palette-3">
+                <div class="palette-name">Terracotta & Clay</div>
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #C9704A;"></div>
+                    <div class="swatch" style="background: #C9976B;"></div>
+                </div>
+                <div class="color-demo">
+                    <h3>Heading Text</h3>
+                    <p>Body text with an <a href="#">inline link</a> for context.</p>
+                    <p class="label">[metadata label]</p>
+                </div>
+            </div>
+
+            <div class="color-palette palette-4">
+                <div class="palette-name">Dusty Rose & Plum</div>
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #D4A5A5;"></div>
+                    <div class="swatch" style="background: #9B7B8E;"></div>
+                </div>
+                <div class="color-demo">
+                    <h3>Heading Text</h3>
+                    <p>Body text with an <a href="#">inline link</a> for context.</p>
+                    <p class="label">[metadata label]</p>
+                </div>
+            </div>
+
+            <div class="color-palette palette-5">
+                <div class="palette-name">Soft Lavender & Periwinkle</div>
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #A8B5D9;"></div>
+                    <div class="swatch" style="background: #B8A8C9;"></div>
+                </div>
+                <div class="color-demo">
+                    <h3>Heading Text</h3>
+                    <p>Body text with an <a href="#">inline link</a> for context.</p>
+                    <p class="label">[metadata label]</p>
+                </div>
+            </div>
+        </div>
+
+        <h2>Your Choices</h2>
+        <ol style="font-size: 1.125rem; line-height: 1.8; margin-left: 1.5rem;">
+            <li><strong>Font for your name:</strong> Which option (1-10)?</li>
+            <li><strong>Color palette:</strong> Current / Coral & Sage / Terracotta / Rose & Plum / Lavender?</li>
+        </ol>
+    </div>
+</body>
+</html>

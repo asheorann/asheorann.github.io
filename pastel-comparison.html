@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pastel Accent Options</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Noto+Serif+Devanagari:wght@400;600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f9f9f7;
+            color: #1a1a1a;
+            font-family: Inter, sans-serif;
+            padding: 3rem;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .note {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: #888;
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 4rem 0 2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e5e3dd;
+        }
+
+        .option-group {
+            display: grid;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .option {
+            background: white;
+            padding: 2.5rem;
+            border: 1px solid #e5e3dd;
+        }
+
+        .option-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #888;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Accent variations */
+        .accent-deep-saffron {
+            --accent: #D4941E;
+        }
+
+        .accent-pastel-marigold {
+            --accent: #E8B563;
+        }
+
+        .accent-soft-marigold {
+            --accent: #F4C95D;
+        }
+
+        .accent-clay {
+            --accent: #C9976B;
+        }
+
+        .accent-sage {
+            --accent: #9CAF88;
+        }
+
+        .sample-heading {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .sample-prose {
+            font-family: 'Source Serif 4', serif;
+            font-size: 1.125rem;
+            line-height: 1.65;
+            margin-bottom: 1.5rem;
+        }
+
+        .sample-prose a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid var(--accent);
+            transition: border-color 200ms ease;
+        }
+
+        .sample-prose a:hover {
+            border-bottom-width: 2px;
+        }
+
+        .sample-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9375rem;
+            color: var(--accent);
+            letter-spacing: 0.02em;
+        }
+
+        .color-swatch {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            border-radius: 4px;
+            border: 1px solid #e5e3dd;
+            margin-right: 1rem;
+            vertical-align: middle;
+        }
+
+        .swatch-deep-saffron {
+            background: #D4941E;
+        }
+
+        .swatch-pastel-marigold {
+            background: #E8B563;
+        }
+
+        .swatch-soft-marigold {
+            background: #F4C95D;
+        }
+
+        .swatch-clay {
+            background: #C9976B;
+        }
+
+        .swatch-sage {
+            background: #9CAF88;
+        }
+
+        .character-note {
+            font-size: 0.9375rem;
+            color: #888;
+            margin-top: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Font specimens */
+        .font-crimson {
+            font-family: 'Crimson Pro', serif;
+        }
+
+        .font-literata {
+            font-family: 'Literata', serif;
+        }
+
+        .font-spectral {
+            font-family: 'Spectral', serif;
+        }
+
+        .font-specimen {
+            margin: 2rem 0;
+        }
+
+        .specimen-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: #888;
+            margin-bottom: 1rem;
+        }
+
+        .specimen-large {
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .specimen-body {
+            font-size: 1.125rem;
+            line-height: 1.65;
+            max-width: 65ch;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #e5e3dd;
+            margin: 3rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pastel & Natural Tones</h1>
+        <p class="note">Softer, earthier alternatives to the original saffron + some less-common font ideas</p>
+
+        <!-- ACCENT COLORS -->
+        <h2>Accent Color Options (from warm to earthy)</h2>
+
+        <div class="option-group">
+            <div class="option accent-deep-saffron">
+                <div class="option-label">Original: Deep Saffron (#D4941E)</div>
+                <span class="color-swatch swatch-deep-saffron"></span>
+                <div>
+                    <div class="sample-heading">On Becoming</div>
+                    <p class="sample-prose">
+                        The garden teaches patience in ways the screen never can. I've been thinking about <a href="#">how we build knowledge</a> through slow accumulation—not the fast consumption of feeds, but the gradual layering of understanding.
+                    </p>
+                    <div class="sample-label">[thinking out loud]</div>
+                    <p class="character-note"><strong>Feel:</strong> Warm and present. Most energetic. Clear contrast against the off-white.</p>
+                </div>
+            </div>
+
+            <div class="option accent-pastel-marigold">
+                <div class="option-label">Pastel Marigold (#E8B563)</div>
+                <span class="color-swatch swatch-pastel-marigold"></span>
+                <div>
+                    <div class="sample-heading">On Becoming</div>
+                    <p class="sample-prose">
+                        The garden teaches patience in ways the screen never can. I've been thinking about <a href="#">how we build knowledge</a> through slow accumulation—not the fast consumption of feeds, but the gradual layering of understanding.
+                    </p>
+                    <div class="sample-label">[thinking out loud]</div>
+                    <p class="character-note"><strong>Feel:</strong> Softer, more muted. Still warm but less punchy. Like dried marigold petals.</p>
+                </div>
+            </div>
+
+            <div class="option accent-soft-marigold">
+                <div class="option-label">Soft Marigold (#F4C95D)</div>
+                <span class="color-swatch swatch-soft-marigold"></span>
+                <div>
+                    <div class="sample-heading">On Becoming</div>
+                    <p class="sample-prose">
+                        The garden teaches patience in ways the screen never can. I've been thinking about <a href="#">how we build knowledge</a> through slow accumulation—not the fast consumption of feeds, but the gradual layering of understanding.
+                    </p>
+                    <div class="sample-label">[thinking out loud]</div>
+                    <p class="character-note"><strong>Feel:</strong> Lightest yellow option. Gentle, optimistic. Risk: might feel too light for text/links.</p>
+                </div>
+            </div>
+
+            <div class="option accent-clay">
+                <div class="option-label">Terracotta Clay (#C9976B)</div>
+                <span class="color-swatch swatch-clay"></span>
+                <div>
+                    <div class="sample-heading">On Becoming</div>
+                    <p class="sample-prose">
+                        The garden teaches patience in ways the screen never can. I've been thinking about <a href="#">how we build knowledge</a> through slow accumulation—not the fast consumption of feeds, but the gradual layering of understanding.
+                    </p>
+                    <div class="sample-label">[thinking out loud]</div>
+                    <p class="character-note"><strong>Feel:</strong> Earthy, grounded, naturey. Like dried clay or sandstone. More neutral than yellow.</p>
+                </div>
+            </div>
+
+            <div class="option accent-sage">
+                <div class="option-label">Soft Sage (#9CAF88)</div>
+                <span class="color-swatch swatch-sage"></span>
+                <div>
+                    <div class="sample-heading">On Becoming</div>
+                    <p class="sample-prose">
+                        The garden teaches patience in ways the screen never can. I've been thinking about <a href="#">how we build knowledge</a> through slow accumulation—not the fast consumption of feeds, but the gradual layering of understanding.
+                    </p>
+                    <div class="sample-label">[thinking out loud]</div>
+                    <p class="character-note"><strong>Feel:</strong> Most naturey—garden, herbs, quiet. Recedes more than the warm tones. Contemplative.</p>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- DISTINCTIVE FONTS -->
+        <h2>Less Common Fonts for Certain Elements</h2>
+        <p class="note">Keeping Source Serif 4 for body text, but these could be used for headings, hero, or special sections</p>
+
+        <div class="option">
+            <div class="specimen-label">Crimson Pro — for headings or hero</div>
+            <div class="font-specimen font-crimson">
+                <div class="specimen-large">Anushka Orekondy</div>
+                <p class="specimen-body">
+                    A Google Font with old-style numerals and classical proportions, but designed for screen. Less common than Garamond but with similar elegance. Could work beautifully for your name / hero section while keeping Source Serif for body text.
+                </p>
+            </div>
+        </div>
+
+        <div class="option">
+            <div class="specimen-label">Literata — for headings or hero</div>
+            <div class="font-specimen font-literata">
+                <div class="specimen-large">Anushka Orekondy</div>
+                <p class="specimen-body">
+                    Originally commissioned for Google Play Books. Variable font with lots of personality. Slightly narrow, good contrast, feels literary without being stuffy. Would make distinctive headings while Source Serif handles body prose.
+                </p>
+            </div>
+        </div>
+
+        <div class="option">
+            <div class="specimen-label">Spectral — for headings or body</div>
+            <div class="font-specimen font-spectral">
+                <div class="specimen-large">Anushka Orekondy</div>
+                <p class="specimen-body">
+                    Designed for Google Docs but rarely seen in personal sites. Open, friendly, highly legible. If you wanted something more distinctive than Source Serif but still very readable for body text, this is a strong candidate. Or just use it for headings.
+                </p>
+            </div>
+        </div>
+
+        <hr>
+
+        <h2>My Recommendation for Mix</h2>
+        <div class="option">
+            <p style="font-size: 1.125rem; line-height: 1.65; margin-bottom: 1rem;">
+                <strong>Accent:</strong> Pastel Marigold (#E8B563) or Terracotta Clay (#C9976B)<br>
+                <strong>Body text:</strong> Source Serif 4 (as you chose)<br>
+                <strong>Headings + nav:</strong> Inter (stays clean and functional)<br>
+                <strong>Hero name:</strong> Crimson Pro or Literata (adds distinction)<br>
+                <strong>Metadata/labels:</strong> JetBrains Mono (as planned)
+            </p>
+            <p class="character-note">
+                This gives you the naturey, grounded pastel feel while keeping readability high. The distinctive serif for your name creates a signature moment without overwhelming the whole site.
+            </p>
+        </div>
+
+        <hr>
+
+        <h2>Your Turn</h2>
+        <ol style="font-size: 1.125rem; line-height: 1.8; margin-left: 1.5rem;">
+            <li><strong>Which accent?</strong> Deep Saffron / Pastel Marigold / Soft Marigold / Clay / Sage?</li>
+            <li><strong>Use a distinctive serif for hero/headings?</strong> If yes, which? (Crimson Pro / Literata / Spectral / stick with Inter)</li>
+        </ol>
+    </div>
+</body>
+</html>

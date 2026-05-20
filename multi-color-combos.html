@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Color Combinations</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f9f9f7;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            padding: 3rem;
+        }
+
+        h1 {
+            margin-bottom: 3rem;
+            font-size: 2rem;
+        }
+
+        .combo-grid {
+            display: grid;
+            gap: 2rem;
+            max-width: 1200px;
+        }
+
+        .combo-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid #e5e3dd;
+        }
+
+        .combo-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .colors {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .swatch {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            border: 1px solid #e5e3dd;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .swatch-label {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            color: #666;
+        }
+
+        .demo {
+            padding: 2rem;
+            border-radius: 8px;
+        }
+
+        .demo h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .demo p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .demo .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-family: monospace;
+        }
+
+        .demo .tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .demo .tag {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-family: monospace;
+        }
+
+        /* Combo 1: Coral & Sage (current favorite) */
+        .combo-1 .demo { background: #faf9f7; }
+        .combo-1 h3 { color: #E8A598; }
+        .combo-1 a { color: #E8A598; text-decoration: none; border-bottom: 1px solid #E8A598; }
+        .combo-1 .badge { background: #fff5f2; color: #E8A598; }
+        .combo-1 .tag { background: #f0f4ec; color: #9CAF88; }
+
+        /* Combo 2: Peach & Mint */
+        .combo-2 .demo { background: #faf9f7; }
+        .combo-2 h3 { color: #F4A896; }
+        .combo-2 a { color: #F4A896; text-decoration: none; border-bottom: 1px solid #F4A896; }
+        .combo-2 .badge { background: #fff6f3; color: #F4A896; }
+        .combo-2 .tag { background: #ebf5f0; color: #8BC4A8; }
+
+        /* Combo 3: Lavender & Butter */
+        .combo-3 .demo { background: #faf9f7; }
+        .combo-3 h3 { color: #B8A8D9; }
+        .combo-3 a { color: #B8A8D9; text-decoration: none; border-bottom: 1px solid #B8A8D9; }
+        .combo-3 .badge { background: #f6f3fa; color: #B8A8D9; }
+        .combo-3 .tag { background: #fffcf0; color: #E8C863; }
+
+        /* Combo 4: Rose & Sky */
+        .combo-4 .demo { background: #faf9f7; }
+        .combo-4 h3 { color: #D99BA8; }
+        .combo-4 a { color: #D99BA8; text-decoration: none; border-bottom: 1px solid #D99BA8; }
+        .combo-4 .badge { background: #fef5f7; color: #D99BA8; }
+        .combo-4 .tag { background: #f0f6fa; color: #A8C4D9; }
+
+        /* Combo 5: Apricot & Lilac */
+        .combo-5 .demo { background: #faf9f7; }
+        .combo-5 h3 { color: #E8B8A0; }
+        .combo-5 a { color: #E8B8A0; text-decoration: none; border-bottom: 1px solid #E8B8A0; }
+        .combo-5 .badge { background: #fef7f4; color: #E8B8A0; }
+        .combo-5 .tag { background: #f5f0f8; color: #C9A8D9; }
+
+        /* Combo 6: Terracotta & Olive */
+        .combo-6 .demo { background: #faf9f7; }
+        .combo-6 h3 { color: #C9704A; }
+        .combo-6 a { color: #C9704A; text-decoration: none; border-bottom: 1px solid #C9704A; }
+        .combo-6 .badge { background: #fef5f0; color: #C9704A; }
+        .combo-6 .tag { background: #f4f3eb; color: #A89F70; }
+    </style>
+</head>
+<body>
+    <h1>Multi-Color Combinations</h1>
+
+    <div class="combo-grid">
+        <!-- Combo 1 -->
+        <div class="combo-card combo-1">
+            <div class="combo-name">1. Coral & Sage (Your Favorite)</div>
+            <div class="colors">
+                <div>
+                    <div class="swatch" style="background: #E8A598;"></div>
+                    <div class="swatch-label">#E8A598</div>
+                </div>
+                <div>
+                    <div class="swatch" style="background: #9CAF88;"></div>
+                    <div class="swatch-label">#9CAF88</div>
+                </div>
+            </div>
+            <div class="demo">
+                <h3>Project Title</h3>
+                <p>Body text with an <a href="#">inline link</a> for context. The coral provides warmth while sage adds grounding.</p>
+                <span class="badge">thinking out loud</span>
+                <div class="tags">
+                    <span class="tag">research</span>
+                    <span class="tag">technical</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Combo 2 -->
+        <div class="combo-card combo-2">
+            <div class="combo-name">2. Peach & Mint</div>
+            <div class="colors">
+                <div>
+                    <div class="swatch" style="background: #F4A896;"></div>
+                    <div class="swatch-label">#F4A896</div>
+                </div>
+                <div>
+                    <div class="swatch" style="background: #8BC4A8;"></div>
+                    <div class="swatch-label">#8BC4A8</div>
+                </div>
+            </div>
+            <div class="demo">
+                <h3>Project Title</h3>
+                <p>Body text with an <a href="#">inline link</a> for context. Peachy and fresh, like spring.</p>
+                <span class="badge">thinking out loud</span>
+                <div class="tags">
+                    <span class="tag">research</span>
+                    <span class="tag">technical</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Combo 3 -->
+        <div class="combo-card combo-3">
+            <div class="combo-name">3. Lavender & Butter</div>
+            <div class="colors">
+                <div>
+                    <div class="swatch" style="background: #B8A8D9;"></div>
+                    <div class="swatch-label">#B8A8D9</div>
+                </div>
+                <div>
+                    <div class="swatch" style="background: #E8C863;"></div>
+                    <div class="swatch-label">#E8C863</div>
+                </div>
+            </div>
+            <div class="demo">
+                <h3>Project Title</h3>
+                <p>Body text with an <a href="#">inline link</a> for context. Dreamy and warm, like sunset.</p>
+                <span class="badge">thinking out loud</span>
+                <div class="tags">
+                    <span class="tag">research</span>
+                    <span class="tag">technical</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Combo 4 -->
+        <div class="combo-card combo-4">
+            <div class="combo-name">4. Rose & Sky</div>
+            <div class="colors">
+                <div>
+                    <div class="swatch" style="background: #D99BA8;"></div>
+                    <div class="swatch-label">#D99BA8</div>
+                </div>
+                <div>
+                    <div class="swatch" style="background: #A8C4D9;"></div>
+                    <div class="swatch-label">#A8C4D9</div>
+                </div>
+            </div>
+            <div class="demo">
+                <h3>Project Title</h3>
+                <p>Body text with an <a href="#">inline link</a> for context. Soft and airy, like clouds.</p>
+                <span class="badge">thinking out loud</span>
+                <div class="tags">
+                    <span class="tag">research</span>
+                    <span class="tag">technical</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Combo 5 -->
+        <div class="combo-card combo-5">
+            <div class="combo-name">5. Apricot & Lilac</div>
+            <div class="colors">
+                <div>
+                    <div class="swatch" style="background: #E8B8A0;"></div>
+                    <div class="swatch-label">#E8B8A0</div>
+                </div>
+                <div>
+                    <div class="swatch" style="background: #C9A8D9;"></div>
+                    <div class="swatch-label">#C9A8D9</div>
+                </div>
+            </div>
+            <div class="demo">
+                <h3>Project Title</h3>
+                <p>Body text with an <a href="#">inline link</a> for context. Romantic and delicate.</p>
+                <span class="badge">thinking out loud</span>
+                <div class="tags">
+                    <span class="tag">research</span>
+                    <span class="tag">technical</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Combo 6 -->
+        <div class="combo-card combo-6">
+            <div class="combo-name">6. Terracotta & Olive</div>
+            <div class="colors">
+                <div>
+                    <div class="swatch" style="background: #C9704A;"></div>
+                    <div class="swatch-label">#C9704A</div>
+                </div>
+                <div>
+                    <div class="swatch" style="background: #A89F70;"></div>
+                    <div class="swatch-label">#A89F70</div>
+                </div>
+            </div>
+            <div class="demo">
+                <h3>Project Title</h3>
+                <p>Body text with an <a href="#">inline link</a> for context. Earthy and grounded, natural tones.</p>
+                <span class="badge">thinking out loud</span>
+                <div class="tags">
+                    <span class="tag">research</span>
+                    <span class="tag">technical</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,117 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allThoughts = await getCollection('thoughts');
+const publishedThoughts = allThoughts
+  .filter(t => !t.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<BaseLayout title="Thinking — Anushka Sheoran">
+  <div class="page-header">
+    <div class="container">
+      <h1>thinking</h1>
+    </div>
+  </div>
+
+  <div class="container">
+    {publishedThoughts.length > 0 ? (
+      <div class="thought-list">
+        {publishedThoughts.map(thought => (
+          <article class="thought-item">
+            <div class="thought-meta">
+              <time class="mono-lower muted">
+                {thought.data.date.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric'
+                })}
+              </time>
+              <span class="status mono-lower" style="color: var(--accent);">
+                [{thought.data.status}]
+              </span>
+            </div>
+            <h2>
+              <a href={`/thinking/${thought.slug}`}>{thought.data.title}</a>
+            </h2>
+            <p class="excerpt">{thought.data.excerpt}</p>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <p class="muted">[No posts yet]</p>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: var(--space-4) 0 var(--space-2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-header h1 {
+    font-size: var(--text-3xl);
+    text-transform: lowercase;
+  }
+
+  .thought-list {
+    padding: var(--space-4) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .thought-item {
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .thought-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .thought-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    align-items: baseline;
+  }
+
+  .thought-item h2 {
+    font-size: var(--text-2xl);
+    margin-bottom: 0.75rem;
+  }
+
+  .thought-item h2 a {
+    color: var(--text);
+    border: none;
+  }
+
+  .thought-item h2 a:hover {
+    color: var(--accent);
+  }
+
+  .excerpt {
+    color: var(--muted);
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .page-header {
+      padding: var(--space-2) 0 var(--space-1);
+    }
+
+    .thought-list {
+      padding: var(--space-2) 0;
+      gap: var(--space-2);
+    }
+
+    .thought-item {
+      padding-bottom: var(--space-2);
+    }
+  }
+</style>

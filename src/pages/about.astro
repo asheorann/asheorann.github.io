@@ -1,0 +1,242 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About — Anushka Sheoran">
+  <div class="page-header">
+    <div class="container">
+      <h1>Anushka Sheoran</h1>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="about-content prose">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-location">Ontario, Canada</div>
+          </div>
+        </div>
+        <div class="timeline-line"></div>
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-location">BS Bioinformatics · UCSD</div>
+          </div>
+        </div>
+        <div class="timeline-line"></div>
+        <div class="timeline-item">
+          <div class="timeline-marker active"></div>
+          <div class="timeline-content">
+            <div class="timeline-location">MS Computer Science · Penn</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="now-section">
+        <h2>now</h2>
+        <ul class="now-list">
+          <li>wrapping up a CIS 700 final measuring multi-turn safety degradation in medical AI</li>
+          <li>building Clariem's pharma forecasting platform, Streamlit, modular Python, Claude API</li>
+          <li>mentoring high schoolers through Curious Cardinals</li>
+          <li>reading: [TODO, fill in a current book or paper]</li>
+          <li>job searching, focused on AI evaluation and frontier health AI</li>
+        </ul>
+      </div>
+
+      <div class="bio-section">
+        <p>I'm a first-year master's student in computer science at the University of Pennsylvania, focused on AI evaluation and safety in clinical contexts. My current research, for CIS 700 (Agentic AI), measures how the safety behavior of medical language models degrades across multi-turn conversations, building on PatientSafetyBench.</p>
+
+        <p>Before Penn I studied bioinformatics at UC San Diego, where I worked at the FDI Lab on RNA-seq analysis and biomedical data harmonization for the Open Data Commons for Spinal Cord Injury. That research was published in <em>Experimental Neurology</em>.</p>
+
+        <p>Alongside school, I work as a Product and Operations Analyst at Clariem Consulting, an AI consulting firm focused on pharma and life sciences. I build internal technical infrastructure, AI-powered tools, and training programs, most recently a pharma launch-readiness assessment platform and a forecasting platform with a Claude-powered narrative layer.</p>
+
+        <p>I serve as the Anthropic Campus Ambassador at Penn and run the Claude Builder Club, where we organized the Anthropic and Penn AI Hackathon, run a startup incubator called Foundry, and host an end-of-semester demo night.</p>
+
+        <p>My longer arc is in AI evaluation and safety in clinical and multi-turn agentic settings, with a particular interest in how this connects to health systems work in India over the next decade.</p>
+
+        <p>[TODO, short personal paragraph: where you're from, what you do outside work, anything that makes the page feel like you]</p>
+      </div>
+
+      <div class="community-section">
+        <h2>community</h2>
+        <ul>
+          <li>Claude Builder Club, Penn — President</li>
+          <li>Penn Hindu Yuva (PHY) — member</li>
+          <li>Anthropic Campus Ambassador, Penn</li>
+          <li>Curious Cardinals — mentor</li>
+          <li>Wharton Penn Biotech Group — consulting project</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: var(--space-4) 0 var(--space-2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-header h1 {
+    font-size: var(--text-3xl);
+  }
+
+  .about-content {
+    padding: var(--space-4) 0;
+  }
+
+  .timeline {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--border);
+    max-width: 600px;
+  }
+
+  .timeline-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .timeline-line {
+    flex: 1;
+    height: 2px;
+    background: var(--border);
+    min-width: 40px;
+  }
+
+  .timeline-marker {
+    width: 14px;
+    height: 14px;
+    background: var(--border);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .timeline-marker.active {
+    background: var(--accent);
+    width: 16px;
+    height: 16px;
+  }
+
+  .timeline-content {
+    text-align: center;
+  }
+
+  .timeline-location {
+    font-size: 0.9375rem;
+    line-height: 1.3;
+  }
+
+  .now-section {
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .now-section h2 {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-2);
+  }
+
+  .now-list {
+    list-style: none;
+    margin: 0;
+  }
+
+  .now-list li {
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    position: relative;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .now-list li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: bold;
+  }
+
+  .bio-section {
+    margin-bottom: var(--space-4);
+  }
+
+  .bio-section p {
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .community-section h2 {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-2);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--border);
+  }
+
+  .community-section ul {
+    list-style: none;
+    margin: 0;
+  }
+
+  .community-section li {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  .community-section li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: bold;
+  }
+
+  @media (max-width: 768px) {
+    .page-header {
+      padding: var(--space-2) 0 var(--space-1);
+    }
+
+    .about-content {
+      padding: var(--space-2) 0;
+    }
+
+    .timeline {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+
+    .timeline-item {
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .timeline-line {
+      display: none;
+    }
+
+    .timeline-content {
+      text-align: left;
+    }
+
+    .bio-section {
+      margin-bottom: var(--space-2);
+    }
+
+    .community-section h2 {
+      padding-top: var(--space-2);
+    }
+  }
+</style>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Options — Anushka's Site</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Newsreader:ital,wght@0,400;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+Devanagari:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f9f9f7;
+            color: #1a1a1a;
+            font-family: Inter, sans-serif;
+            padding: 3rem;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 4rem 0 2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e5e3dd;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin: 2rem 0 1rem;
+        }
+
+        .note {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: #888;
+            margin-bottom: 3rem;
+        }
+
+        .option-group {
+            display: grid;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .option {
+            background: white;
+            padding: 2.5rem;
+            border: 1px solid #e5e3dd;
+        }
+
+        .option-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #888;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Accent Color Options */
+        .accent-oxblood {
+            --accent: #8B2635;
+        }
+
+        .accent-saffron {
+            --accent: #D4941E;
+        }
+
+        .accent-teal {
+            --accent: #1B5E5E;
+        }
+
+        .sample-heading {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .sample-prose {
+            font-size: 1.125rem;
+            line-height: 1.65;
+            margin-bottom: 1rem;
+        }
+
+        .sample-prose a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid var(--accent);
+            transition: border-color 200ms ease;
+        }
+
+        .sample-prose a:hover {
+            border-bottom-width: 2px;
+        }
+
+        .sample-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9375rem;
+            color: var(--accent);
+            letter-spacing: 0.02em;
+        }
+
+        /* Serif Options */
+        .serif-source {
+            font-family: 'Source Serif 4', serif;
+        }
+
+        .serif-newsreader {
+            font-family: 'Newsreader', serif;
+        }
+
+        .serif-garamond {
+            font-family: 'EB Garamond', serif;
+        }
+
+        .serif-sample {
+            font-size: 1.125rem;
+            line-height: 1.65;
+            max-width: 65ch;
+        }
+
+        .serif-note {
+            font-family: Inter, sans-serif;
+            font-size: 0.9375rem;
+            color: #888;
+            margin-top: 1rem;
+            font-style: normal;
+        }
+
+        /* Type Scale */
+        .scale-demo {
+            margin: 2rem 0;
+        }
+
+        .scale-hero {
+            font-size: 4.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            line-height: 1.1;
+        }
+
+        .scale-devanagari {
+            font-family: 'Noto Serif Devanagari', serif;
+            font-size: 1.8rem;
+            color: #888;
+            margin-bottom: 2rem;
+        }
+
+        .scale-h1 {
+            font-size: 2.75rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+
+        .scale-h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+
+        .scale-h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin: 1.5rem 0 0.75rem;
+        }
+
+        .scale-h4 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin: 1.5rem 0 0.75rem;
+        }
+
+        .scale-body {
+            font-size: 1.125rem;
+            line-height: 1.65;
+            max-width: 65ch;
+        }
+
+        .scale-meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9375rem;
+            color: #888;
+            margin-top: 0.5rem;
+        }
+
+        /* Layout Demo */
+        .layout-demo {
+            background: white;
+            padding: 3rem;
+            border: 1px solid #e5e3dd;
+            margin: 2rem 0;
+        }
+
+        .section-gap {
+            margin-bottom: 4rem;
+        }
+
+        .element-gap {
+            margin-bottom: 2rem;
+        }
+
+        .tight-gap {
+            margin-bottom: 1rem;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #e5e3dd;
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Design Options for Review</h1>
+        <p class="note">Open this file in your browser to see visual comparisons. Pick what feels right.</p>
+
+        <!-- ACCENT COLORS -->
+        <h2>1. Accent Color Options</h2>
+        <div class="option-group">
+            <div class="option accent-oxblood">
+                <div class="option-label">Option A: Deep Oxblood (#8B2635)</div>
+                <div class="sample-heading">On Epistemic Humility</div>
+                <p class="sample-prose">
+                    Body text in #1a1a1a with an <a href="#">inline link</a> that uses the oxblood color with a subtle underline that draws on hover.
+                </p>
+                <div class="sample-label">[thinking out loud]</div>
+                <p class="serif-note"><strong>Character:</strong> Serious, literary, a bit Victorian. Strong but not loud. Most restrained of the three.</p>
+            </div>
+
+            <div class="option accent-saffron">
+                <div class="option-label">Option B: Saffron (#D4941E)</div>
+                <div class="sample-heading">On Epistemic Humility</div>
+                <p class="sample-prose">
+                    Body text in #1a1a1a with an <a href="#">inline link</a> that uses the saffron color with a subtle underline that draws on hover.
+                </p>
+                <div class="sample-label">[thinking out loud]</div>
+                <p class="serif-note"><strong>Character:</strong> Warm, inviting, optimistic. Stands out more but stays grounded. Most energetic.</p>
+            </div>
+
+            <div class="option accent-teal">
+                <div class="option-label">Option C: Deep Teal (#1B5E5E)</div>
+                <div class="sample-heading">On Epistemic Humility</div>
+                <p class="sample-prose">
+                    Body text in #1a1a1a with an <a href="#">inline link</a> that uses the teal color with a subtle underline that draws on hover.
+                </p>
+                <div class="sample-label">[thinking out loud]</div>
+                <p class="serif-note"><strong>Character:</strong> Cool, contemplative, technical-leaning. Recedes more, most subtle.</p>
+            </div>
+        </div>
+
+        <!-- SERIF OPTIONS -->
+        <h2>2. Serif Typeface Options</h2>
+        <p class="note">Each shown at 18px with 1.65 line-height (the body text size)</p>
+
+        <div class="option-group">
+            <div class="option">
+                <div class="option-label">Option A: Source Serif 4</div>
+                <p class="serif-sample serif-source">
+                    What does it mean to hold a belief lightly? I've been thinking about epistemic humility—not as a performance of uncertainty, but as a genuine stance toward knowledge. The difference between "I don't know" as a deflection and "I don't know" as an invitation to think together. There's something about the texture of good thinking that resists certainty without collapsing into relativism.
+                </p>
+                <p class="serif-note"><strong>Character:</strong> Clean, contemporary, designed for screen. Feels like modern editorial—Stripe Press territory. Not precious, not academic. Good readability, doesn't call attention to itself.</p>
+            </div>
+
+            <div class="option">
+                <div class="option-label">Option B: Newsreader</div>
+                <p class="serif-sample serif-newsreader">
+                    What does it mean to hold a belief lightly? I've been thinking about epistemic humility—not as a performance of uncertainty, but as a genuine stance toward knowledge. The difference between "I don't know" as a deflection and "I don't know" as an invitation to think together. There's something about the texture of good thinking that resists certainty without collapsing into relativism.
+                </p>
+                <p class="serif-note"><strong>Character:</strong> More contrast than Source Serif, slightly narrower. Feels like quality journalism or a well-set magazine. More classical but still very readable. Good middle ground.</p>
+            </div>
+
+            <div class="option">
+                <div class="option-label">Option C: EB Garamond</div>
+                <p class="serif-sample serif-garamond">
+                    What does it mean to hold a belief lightly? I've been thinking about epistemic humility—not as a performance of uncertainty, but as a genuine stance toward knowledge. The difference between "I don't know" as a deflection and "I don't know" as an invitation to think together. There's something about the texture of good thinking that resists certainty without collapsing into relativism.
+                </p>
+                <p class="serif-note"><strong>Character:</strong> The most romantic choice. Beautiful, classical, high contrast. Book energy—essays that feel like they could be printed and bound. Most opinionated. Risk: can feel affected if the writing doesn't match the typography's weight.</p>
+            </div>
+        </div>
+
+        <!-- TYPE SCALE -->
+        <h2>3. Type Scale (1.25 ratio from 18px base)</h2>
+        <div class="option">
+            <div class="scale-demo">
+                <div class="scale-hero">Anushka Orekondy</div>
+                <div class="scale-devanagari">अनुष्का</div>
+
+                <div class="scale-h1">Page Title (h1 — 44px)</div>
+                <div class="scale-h2">Major Section (h2 — 32px)</div>
+                <div class="scale-h3">Subsection (h3 — 24px)</div>
+                <div class="scale-h4">Minor Heading (h4 — 20px)</div>
+
+                <p class="scale-body">
+                    Body text at 18px with 1.65 line-height. This is where most of your writing lives. The hierarchy should feel clear but not dramatic—each level has a job, nothing is screaming.
+                </p>
+                <p class="scale-meta">metadata / dates / labels — 15px in JetBrains Mono</p>
+            </div>
+        </div>
+
+        <!-- LAYOUT RHYTHM -->
+        <h2>4. Layout & Spacing Rhythm</h2>
+        <p class="note">Proposed vertical spacing: 4rem between sections, 2rem between elements, 1rem for tight groupings</p>
+
+        <div class="layout-demo">
+            <div class="section-gap">
+                <h3>Section One (4rem gap below)</h3>
+                <div class="element-gap">
+                    <p>Element with 2rem gap below</p>
+                </div>
+                <div class="element-gap">
+                    <p>Another element with 2rem gap below</p>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="section-gap">
+                <h3>Section Two (4rem gap below)</h3>
+                <div class="tight-gap">
+                    <p class="scale-meta">date: may 2026</p>
+                </div>
+                <div class="element-gap">
+                    <p><strong>Title of Something</strong></p>
+                </div>
+                <p>Tightly grouped metadata (1rem) sits close to its heading, while the next element gets 2rem breathing room.</p>
+            </div>
+        </div>
+
+        <h3>Header behavior</h3>
+        <div class="option-group">
+            <div class="option">
+                <div class="option-label">Option A: Fixed header (recommended)</div>
+                <p>Slim fixed header (60px tall) with hairline bottom border. Nav always accessible, never intrusive. Clean, functional.</p>
+            </div>
+            <div class="option">
+                <div class="option-label">Option B: Static header</div>
+                <p>Header scrolls with the page. More "scroll into the content" feeling. Slightly more editorial, less app-like.</p>
+            </div>
+        </div>
+
+        <h3>Hero vertical spacing</h3>
+        <p class="note">Proposal: 6rem padding top, 8rem padding bottom — gives the hero real presence without being excessive.</p>
+
+        <hr style="margin: 4rem 0;">
+
+        <h2>Your Choices</h2>
+        <ol style="font-size: 1.125rem; line-height: 1.8; margin-left: 1.5rem;">
+            <li><strong>Accent color:</strong> A (Oxblood) / B (Saffron) / C (Teal)?</li>
+            <li><strong>Serif:</strong> A (Source Serif 4) / B (Newsreader) / C (EB Garamond)?</li>
+            <li><strong>Type scale:</strong> Keep as shown, or adjust?</li>
+            <li><strong>Vertical rhythm:</strong> 4rem/2rem/1rem feel right, or too spacious/tight?</li>
+            <li><strong>Header:</strong> Fixed or static?</li>
+            <li><strong>GitHub username:</strong> (I need this for deployment config)</li>
+        </ol>
+    </div>
+</body>
+</html>
