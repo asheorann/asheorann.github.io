@@ -1,0 +1,13 @@
+User-agent: *
+Disallow: /images/
+Allow: /
+
+# Discourage email harvesting bots
+User-agent: EmailCollector
+Disallow: /
+
+User-agent: EmailSiphon
+Disallow: /
+
+User-agent: EmailWolf
+Disallow: /
