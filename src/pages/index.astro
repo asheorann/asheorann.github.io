@@ -7,7 +7,6 @@ const allThoughts = await getCollection('thoughts');
 // Calculate reading time for each thought
 const thoughtsWithReadingTime = await Promise.all(
   allThoughts.map(async (thought) => {
-    const { Content } = await thought.render();
     const text = thought.body;
     const words = text.split(/\s+/).length;
     const readingTime = Math.ceil(words / 200); // 200 words per minute
@@ -276,7 +275,7 @@ const featuredProjects = allProjects
 
   <script>
     const themeToggleNav = document.getElementById('theme-toggle-nav');
-    const sidebar = document.querySelector('.sidebar');
+    const sidebar = document.querySelector('.sidebar') as HTMLElement | null;
     const scrollProgress = document.getElementById('scroll-progress');
     const topNav = document.getElementById('top-nav');
     const heroLanding = document.getElementById('hero-landing');
@@ -379,7 +378,7 @@ const featuredProjects = allProjects
           homeView!.style.display = 'block';
           thinkingSection!.style.display = 'none';
           projectsSection!.style.display = 'none';
-          sidebar!.style.display = 'block';
+          if (sidebar) sidebar.style.display = 'block';
           mainContent!.classList.remove('full-width');
           window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -391,7 +390,7 @@ const featuredProjects = allProjects
           homeView!.style.display = 'none';
           thinkingSection!.style.display = 'block';
           projectsSection!.style.display = 'none';
-          sidebar!.style.display = 'none';
+          if (sidebar) sidebar.style.display = 'none';
           mainContent!.classList.add('full-width');
           topNav!.classList.add('visible');
 
@@ -406,7 +405,7 @@ const featuredProjects = allProjects
           homeView!.style.display = 'none';
           thinkingSection!.style.display = 'none';
           projectsSection!.style.display = 'block';
-          sidebar!.style.display = 'none';
+          if (sidebar) sidebar.style.display = 'none';
           mainContent!.classList.add('full-width');
           topNav!.classList.add('visible');
 
@@ -421,11 +420,14 @@ const featuredProjects = allProjects
 
     // Theme toggle
     const getTheme = () => localStorage.getItem('theme') || 'light';
-    const setTheme = (theme) => {
+    const setTheme = (theme: string) => {
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem('theme', theme);
       if (themeToggleNav) {
-        themeToggleNav.querySelector('.theme-icon-nav').textContent = theme === 'dark' ? '☀' : '☾';
+        const icon = themeToggleNav.querySelector('.theme-icon-nav');
+        if (icon) {
+          icon.textContent = theme === 'dark' ? '☀' : '☾';
+        }
       }
     };
 
