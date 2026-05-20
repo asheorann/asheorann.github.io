@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Favicon Preview</title>
+  <style>
+    body {
+      font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f9f9f7;
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      color: #1a1a1a;
+    }
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    .preview-item {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      border: 1px solid #e5e3dd;
+      text-align: center;
+    }
+    .preview-item img {
+      display: block;
+      margin: 0 auto 1rem;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+    }
+    .preview-item h3 {
+      font-size: 0.875rem;
+      color: #888;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    .preview-item p {
+      font-size: 0.75rem;
+      color: #aaa;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .svg-preview {
+      grid-column: 1 / -1;
+    }
+    .svg-preview img {
+      width: 128px;
+      height: 128px;
+    }
+    .note {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 6px;
+      padding: 1rem;
+      font-size: 0.875rem;
+      color: #92400e;
+    }
+  </style>
+</head>
+<body>
+  <h1>Favicon Preview</h1>
+
+  <div class="preview-grid">
+    <div class="preview-item">
+      <h3>16×16</h3>
+      <img src="/favicon-16.png" alt="16x16 favicon" style="width: 16px; height: 16px;">
+      <p>Browser tab (default)</p>
+    </div>
+
+    <div class="preview-item">
+      <h3>32×32</h3>
+      <img src="/favicon-32.png" alt="32x32 favicon" style="width: 32px; height: 32px;">
+      <p>Taskbar, bookmarks bar</p>
+    </div>
+
+    <div class="preview-item">
+      <h3>180×180</h3>
+      <img src="/apple-touch-icon.png" alt="180x180 apple touch icon" style="width: 64px; height: 64px;">
+      <p>iOS home screen</p>
+    </div>
+
+    <div class="preview-item svg-preview">
+      <h3>SVG (Scalable)</h3>
+      <img src="/favicon.svg" alt="SVG favicon">
+      <p>Modern browsers (auto-scales)</p>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Preview note:</strong> The 'a' is rendered in Inter 600 with the accent color #A8B5D9 on a #f9f9f7 background. At 16px it may appear slightly less crisp than larger sizes, which is normal for small icon rendering.
+  </div>
+</body>
+</html>

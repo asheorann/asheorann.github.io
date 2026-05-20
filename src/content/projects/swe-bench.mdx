@@ -1,0 +1,25 @@
+---
+title: "Enhancing Claude 3.5 Sonnet Reliability on SWE-bench Verified"
+date: 2025-12-15
+summary: "Reproduced Claude 3.5 Sonnet on SWE-bench Verified and tested whether prompt interventions could shift the failure distribution."
+bullets:
+  - "20% baseline resolve rate on a 50-task sample"
+  - "tried two prompt interventions: a strict TDD protocol and a simplified self-verification rule"
+  - "TDD protocol resolved 0 tasks because the agent stalled before editing"
+  - "simplified protocol held 20% but caused destructive over-deletions to surge"
+takeaway: "Step budget and prompt design are not independent levers. Tightening one without adjusting the other can offset the gains from the other."
+tags: ["research", "technical"]
+featured: true
+hasFullPage: false
+links:
+  - { label: "report", url: "/papers/swe-bench-claude-35-sonnet.pdf" }
+---
+
+- 20% baseline resolve rate on a 50-task sample
+- tried two prompt interventions: a strict TDD protocol and a simplified self-verification rule
+- TDD protocol resolved 0 tasks because the agent stalled before editing
+- simplified protocol held 20% but caused destructive over-deletions to surge
+
+> Step budget and prompt design are not independent levers. Tightening one without adjusting the other can offset the gains from the other.
+
+*[full write-up coming soon]*

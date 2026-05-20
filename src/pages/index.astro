@@ -1,6 +1,7 @@
 ---
 import HomeLayout from '../layouts/HomeLayout.astro';
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 
 const allThoughts = await getCollection('thoughts');
 
@@ -86,7 +87,7 @@ const featuredProjects = allProjects
       </div>
       <div class="nav-right">
         <a href="#thinking" class="nav-link" data-tab="thinking">thinking</a>
-        <a href="#projects" class="nav-link" data-tab="projects">projects</a>
+        <a href="/building" class="nav-link">building</a>
         <button class="pin-toggle" id="pin-toggle" aria-label="Pin navigation" title="Pin navigation">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 17v5"></path>
@@ -129,10 +130,10 @@ const featuredProjects = allProjects
           <div class="now-section">
             <p class="section-marker mono-lower muted">top of mind</p>
             <ul class="now-list">
-              <li>wrapping up CIS 700 final on multi-turn safety degradation</li>
-              <li>building Clariem's pharma forecasting platform</li>
-              <li>mentoring through Curious Cardinals</li>
-              <li>job searching, AI evaluation focus</li>
+              <li>understanding causal inference across three lenses: medical, ML, and broader</li>
+              <li>studying how frontier AI labs approach evaluation and alignment/control research</li>
+              <li>building AI tools for pharma commercial teams at Clariem</li>
+              <li>closing the semester with CBC and the multi-turn safety paper</li>
             </ul>
           </div>
 
@@ -152,7 +153,13 @@ const featuredProjects = allProjects
         <section class="tab-section" id="home-view">
           <div class="intro-full">
             <p>
-              I work on AI evaluation in clinical settings, currently focused on how multi-turn medical conversations degrade the safety behavior of language models. Outside of school I work at Clariem, an AI consulting firm in pharma and life sciences, and I run the Claude Builder Club at Penn. I enjoy learning about how our world works more broadly (because it's fun...) and because it helps me identify places of meaningful impact.
+              Master's student in computer science at Penn, previously bioinformatics at UCSD. Currently focused on AI safety in healthcare, specifically how patient-facing AI degrades in safety behavior across multi-turn clinical conversations.
+            </p>
+            <p>
+              Outside school, I work at Clariem on AI for pharma and life sciences, and I run the Claude Builder Club at Penn.
+            </p>
+            <p class="intro-aside">
+              I enjoy learning broadly about how the world works, partly because it's fun, partly because it helps me find places where I can contribute. Don't hesitate to reach out :)
             </p>
           </div>
 
@@ -161,18 +168,13 @@ const featuredProjects = allProjects
             <div class="project-grid">
               {featuredProjects.map(project => (
                 <article class="project-card">
-                  {project.data.coverImage && (
-                    <div class="project-image">
-                      <img src={project.data.coverImage} alt={project.data.title} />
-                    </div>
-                  )}
                   <div class="project-content">
                     <div class="project-header">
                       <h3>
-                        {project.data.link ? (
-                          <a href={project.data.link} target="_blank" rel="noopener">{project.data.title}</a>
+                        {project.data.hasFullPage ? (
+                          <a href={`/building/${project.slug}`}>{project.data.title}</a>
                         ) : (
-                          <a href={`/projects/${project.slug}`}>{project.data.title}</a>
+                          <span>{project.data.title}</span>
                         )}
                       </h3>
                       <div class="project-tags">
@@ -182,6 +184,13 @@ const featuredProjects = allProjects
                       </div>
                     </div>
                     <p class="project-summary">{project.data.summary}</p>
+                    {project.data.links && project.data.links.length > 0 && (
+                      <div class="project-links">
+                        {project.data.links.map(link => (
+                          <a href={link.url} target="_blank" rel="noopener" class="project-link-item">[ {link.label} ]</a>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </article>
               ))}
@@ -192,11 +201,29 @@ const featuredProjects = allProjects
 
           <h2 class="section-heading mono-lower" style="margin-top: 3rem;">community</h2>
           <div class="community-section">
-            <ul class="community-list">
-              <li>Mentoring high school students through Curious Cardinals</li>
-              <li>Running the Claude Builder Club at Penn</li>
-              <li>Exploring AI development and building projects together</li>
-            </ul>
+            <div class="community-photo-container">
+              <img src="/images/community/community-photo.jpeg" alt="Penn Claude Builder Club board, May 2026" class="community-photo" />
+              <p class="community-photo-caption mono-lower muted">penn CBC board, may 2026</p>
+            </div>
+
+            <div class="community-subsection">
+              <h3 class="community-subsection-label mono-lower muted">at penn</h3>
+              <ul class="community-list">
+                <li>Anthropic Campus Ambassador & <a href="https://penncbc.com" target="_blank" rel="noopener">claude builder club</a> president <span class="muted">(2025 to present)</span></li>
+                <li>Penn Biotech Group <span class="muted">consultant (fall 2025)</span></li>
+                <li>Penn Hindu Yuva <span class="muted">member (2025 to 2026)</span></li>
+                <li>Curious Cardinals <span class="muted">mentor for high schoolers (since march 2026)</span></li>
+              </ul>
+            </div>
+
+            <div class="community-subsection">
+              <h3 class="community-subsection-label mono-lower muted">at ucsd</h3>
+              <ul class="community-list community-list-quiet">
+                <li>Undergraduate Bioinformatics Club <span class="muted">VP (2024)</span></li>
+                <li>Triton NeuroTech <span class="muted">secretary (fall 2023)</span></li>
+                <li>Phi Beta Lambda <span class="muted">VP (2021 to 2023)</span></li>
+              </ul>
+            </div>
           </div>
         </section>
 
@@ -230,43 +257,6 @@ const featuredProjects = allProjects
             </div>
           ) : (
             <p class="muted">[No posts yet]</p>
-          )}
-        </section>
-
-        <!-- Projects Tab -->
-        <section class="tab-section" id="projects" style="display: none;">
-          <h2 class="section-heading mono-lower">all projects</h2>
-          {allProjects.length > 0 ? (
-            <div class="project-grid">
-              {allProjects.map(project => (
-                <article class="project-card">
-                  {project.data.coverImage && (
-                    <div class="project-image">
-                      <img src={project.data.coverImage} alt={project.data.title} />
-                    </div>
-                  )}
-                  <div class="project-content">
-                    <div class="project-header">
-                      <h3>
-                        {project.data.link ? (
-                          <a href={project.data.link} target="_blank" rel="noopener">{project.data.title}</a>
-                        ) : (
-                          <a href={`/projects/${project.slug}`}>{project.data.title}</a>
-                        )}
-                      </h3>
-                      <div class="project-tags">
-                        {project.data.tags.map(tag => (
-                          <span class="tag">{tag}</span>
-                        ))}
-                      </div>
-                    </div>
-                    <p class="project-summary">{project.data.summary}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          ) : (
-            <p class="muted">[No projects yet]</p>
           )}
         </section>
       </main>
@@ -354,10 +344,9 @@ const featuredProjects = allProjects
     });
 
     // Tab switching
-    const navLinks = document.querySelectorAll('.nav-link');
+    const navLinks = document.querySelectorAll('.nav-link[data-tab]');
     const homeView = document.getElementById('home-view');
     const thinkingSection = document.getElementById('thinking');
-    const projectsSection = document.getElementById('projects');
     const mainContent = document.querySelector('.main-content');
 
     navLinks.forEach(link => {
@@ -377,7 +366,6 @@ const featuredProjects = allProjects
           if (heroLanding) heroLanding.style.display = 'flex';
           homeView!.style.display = 'block';
           thinkingSection!.style.display = 'none';
-          projectsSection!.style.display = 'none';
           if (sidebar) sidebar.style.display = 'block';
           mainContent!.classList.remove('full-width');
           window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -389,7 +377,6 @@ const featuredProjects = allProjects
           if (heroLanding) heroLanding.style.display = 'none';
           homeView!.style.display = 'none';
           thinkingSection!.style.display = 'block';
-          projectsSection!.style.display = 'none';
           if (sidebar) sidebar.style.display = 'none';
           mainContent!.classList.add('full-width');
           topNav!.classList.add('visible');
@@ -398,21 +385,6 @@ const featuredProjects = allProjects
           thinkingSection!.classList.remove('animate');
           setTimeout(() => {
             thinkingSection!.classList.add('animate');
-          }, 10);
-        } else if (tabName === 'projects') {
-          // Hide hero landing
-          if (heroLanding) heroLanding.style.display = 'none';
-          homeView!.style.display = 'none';
-          thinkingSection!.style.display = 'none';
-          projectsSection!.style.display = 'block';
-          if (sidebar) sidebar.style.display = 'none';
-          mainContent!.classList.add('full-width');
-          topNav!.classList.add('visible');
-
-          // Trigger animations
-          projectsSection!.classList.remove('animate');
-          setTimeout(() => {
-            projectsSection!.classList.add('animate');
           }, 10);
         }
       });
@@ -677,6 +649,14 @@ const featuredProjects = allProjects
     line-height: 1.6;
     margin: 0;
     font-size: 1rem;
+  }
+
+  .intro-full p + p {
+    margin-top: 0.75rem;
+  }
+
+  .intro-aside {
+    margin-top: 1.75rem !important;
   }
 
   /* Hero Landing Section */
@@ -1115,6 +1095,49 @@ const featuredProjects = allProjects
     font-weight: bold;
   }
 
+  .community-photo-container {
+    float: right;
+    max-width: 280px;
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+    transform: rotate(-2deg);
+    background: white;
+    padding: 8px 8px 24px 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .community-photo {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .community-photo-caption {
+    font-size: 0.8125rem;
+    margin-top: 0.5rem;
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  .community-subsection {
+    margin-bottom: 1.5rem;
+  }
+
+  .community-subsection:last-child {
+    margin-bottom: 0;
+  }
+
+  .community-subsection-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    text-transform: lowercase;
+  }
+
+  .community-list-quiet {
+    opacity: 0.85;
+  }
+
 
   .nav-link {
     font-family: var(--font-sans);
@@ -1265,24 +1288,6 @@ const featuredProjects = allProjects
     overflow: hidden;
   }
 
-  .project-image {
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
-    background: var(--card-bg);
-  }
-
-  .project-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 300ms ease;
-  }
-
-  .project-card:hover .project-image img {
-    transform: scale(1.05);
-  }
-
   .project-content {
     padding: 1.5rem;
   }
@@ -1296,20 +1301,6 @@ const featuredProjects = allProjects
   #home-view.animate .project-card:nth-child(3) { animation-delay: 900ms; }
   #home-view.animate .project-card:nth-child(4) { animation-delay: 1000ms; }
 
-  /* Projects page animations */
-  #projects.animate .project-card {
-    animation: fadeInUp 600ms ease forwards;
-  }
-
-  #projects.animate .project-card:nth-child(1) { animation-delay: 100ms; }
-  #projects.animate .project-card:nth-child(2) { animation-delay: 200ms; }
-  #projects.animate .project-card:nth-child(3) { animation-delay: 300ms; }
-  #projects.animate .project-card:nth-child(4) { animation-delay: 400ms; }
-  #projects.animate .project-card:nth-child(5) { animation-delay: 500ms; }
-  #projects.animate .project-card:nth-child(6) { animation-delay: 600ms; }
-  #projects.animate .project-card:nth-child(7) { animation-delay: 700ms; }
-  #projects.animate .project-card:nth-child(8) { animation-delay: 800ms; }
-  #projects.animate .project-card:nth-child(9) { animation-delay: 900ms; }
 
   .project-card:hover {
     border-color: var(--accent);
@@ -1319,10 +1310,6 @@ const featuredProjects = allProjects
 
   .project-header {
     margin-bottom: 0.75rem;
-  }
-
-  .project-card:has(.project-image) .project-content {
-    padding-top: 1.25rem;
   }
 
   .project-card h3 {
@@ -1339,6 +1326,72 @@ const featuredProjects = allProjects
 
   .project-card h3 a:hover {
     color: var(--accent-secondary);
+  }
+
+  .project-card h3 span {
+    color: var(--text);
+  }
+
+  .project-bullets {
+    list-style: none;
+    margin: 0.75rem 0 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .project-bullets li {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    padding-left: 1rem;
+    position: relative;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .project-bullets li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: bold;
+  }
+
+  .project-takeaway {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 0.75rem;
+  }
+
+  .project-links {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .project-link-item {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    text-decoration: none;
+    border: none;
+    transition: color 200ms ease;
+  }
+
+  .project-link-item:hover {
+    color: var(--text);
+    border: none;
+  }
+
+  .project-note {
+    font-size: 0.8125rem;
+    color: var(--muted);
+    margin-top: 0.75rem;
+    font-style: italic;
   }
 
   .project-tags {
@@ -1436,6 +1489,13 @@ const featuredProjects = allProjects
     .thought-card,
     .project-card {
       padding: 1.25rem;
+    }
+
+    .community-photo-container {
+      float: none;
+      max-width: 100%;
+      margin: 0 auto 1.5rem;
+      transform: none;
     }
   }
 </style>
