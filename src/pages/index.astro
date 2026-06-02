@@ -78,7 +78,7 @@ const featuredProjects = allProjects
     </section>
 
     <!-- Top Navigation -->
-    <nav class="top-nav" id="top-nav">
+    <nav class="top-nav pinned visible" id="top-nav">
       <div class="nav-left">
         <button class="theme-toggle-nav" id="theme-toggle-nav" aria-label="Toggle dark mode">
           <span class="theme-icon-nav">☾</span>
@@ -88,7 +88,7 @@ const featuredProjects = allProjects
       <div class="nav-right">
         <a href="#thinking" class="nav-link" data-tab="thinking">thinking</a>
         <a href="/building" class="nav-link">building</a>
-        <button class="pin-toggle" id="pin-toggle" aria-label="Pin navigation" title="Pin navigation">
+        <button class="pin-toggle active" id="pin-toggle" aria-label="Pin navigation" title="Unpin navigation">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 17v5"></path>
             <path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"></path>
@@ -273,7 +273,7 @@ const featuredProjects = allProjects
     const cursorLight = document.getElementById('cursor-light');
 
     let currentTab = 'home';
-    let isNavPinned = false;
+    let isNavPinned = true;
 
     // Cursor light effect
     document.addEventListener('mousemove', (e) => {
