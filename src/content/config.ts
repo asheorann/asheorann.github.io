@@ -6,7 +6,7 @@ const thoughts = defineCollection({
     title: z.string(),
     date: z.date(),
     excerpt: z.string(),
-    status: z.enum(['thinking out loud', 'draft argument', 'standing position', 'notes']),
+    status: z.enum(['thinking out loud', 'draft argument', 'standing position', 'notes', 'some draft thoughts with open questions']),
     draft: z.boolean().optional(),
   }),
 });
