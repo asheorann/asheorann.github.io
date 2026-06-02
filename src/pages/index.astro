@@ -370,8 +370,10 @@ const featuredProjects = allProjects
           mainContent!.classList.remove('full-width');
           window.scrollTo({ top: 0, behavior: 'smooth' });
 
-          // Hide nav initially, will show on scroll
-          topNav!.classList.remove('visible');
+          // Hide nav initially unless pinned, will show on scroll
+          if (!isNavPinned) {
+            topNav!.classList.remove('visible');
+          }
         } else if (tabName === 'thinking') {
           // Hide hero landing
           if (heroLanding) heroLanding.style.display = 'none';
@@ -1041,7 +1043,7 @@ const featuredProjects = allProjects
 
   /* When sidebar is hidden (thinking/projects pages) */
   .main-content.full-width {
-    max-width: 650px;
+    max-width: 900px;
     margin: 0 auto;
   }
 
