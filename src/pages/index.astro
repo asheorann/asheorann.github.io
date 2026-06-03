@@ -349,6 +349,16 @@ const featuredProjects = allProjects
     const thinkingSection = document.getElementById('thinking');
     const mainContent = document.querySelector('.main-content');
 
+    // Initialize animations if nav is pinned on load
+    if (isNavPinned) {
+      if (sidebar && !sidebar.classList.contains('animate')) {
+        sidebar.classList.add('animate');
+      }
+      if (homeView && !homeView.classList.contains('animate')) {
+        homeView.classList.add('animate');
+      }
+    }
+
     navLinks.forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
