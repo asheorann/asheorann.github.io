@@ -24,6 +24,32 @@ const allProjects = await getCollection('projects');
 const featuredProjects = allProjects
   .filter(p => p.data.featured)
   .slice(0, 4);
+
+// Top of mind nodes - data-driven for easy editing
+const topOfMindNodes = [
+  {
+    id: 'causal-inference',
+    title: 'Causal Inference and Health Economics',
+    blurb: `In Rachel Werner's lab at Penn, I'm studying how Medicaid payment rates affect nursing home staffing, quality, and resident outcomes, using multi-year panel data to get closer to causal answers than single-year snapshots allow. Along the way I'm building a working map of Medicare and Medicaid data.`
+  },
+  {
+    id: 'single-cell',
+    title: 'Single-Cell Tools and Bioinformatics',
+    // TODO: replace "exploring" with what's actually built once scoped.
+    blurb: `As a Convergence Scholar in Dan Beiting's lab at Penn Vet's Center for Host-Microbial Interactions, I'm extending CellxGene VIP, which hosts the lab's GutPath single-cell atlas, with analyses like cell-cell communication. I'm also exploring an AI layer that helps biologists ask questions of their own data directly.`
+  },
+  {
+    id: 'generative-models',
+    title: 'Generative Models for Biology',
+    // TODO: add one line on my specific project with the Chatterjee lab.
+    blurb: `I'm learning flow matching and diffusion, continuous and discrete, through Penn's CIS 6270 with Pranam Chatterjee. The course covers discrete generative models for designing peptide and protein therapeutics.`
+  },
+  {
+    id: 'ai-safety',
+    title: 'AI Safety in Healthcare',
+    blurb: `I co-authored MultiTurnPSB, a benchmark that tests medical AI safety under multi-turn adversarial pressure (<a href="https://arxiv.org/abs/2606.02630" target="_blank" rel="noopener">arXiv 2606.02630</a>). I'm interested in what it takes for AI to be trustworthy with sensitive health data.`
+  }
+];
 ---
 
 <HomeLayout title="Anushka Sheoran | Bioinformatics, AI and Strategy in Life Sciences, and AI Safety | Masters at University of Pennsylvania" description="Anushka Sheoran - Masters student focusing on bioinformatics, AI and strategy in life sciences, and AI safety at the University of Pennsylvania.">
@@ -127,16 +153,6 @@ const featuredProjects = allProjects
             </div>
           </div>
 
-          <div class="now-section">
-            <p class="section-marker mono-lower muted">top of mind</p>
-            <ul class="now-list">
-              <li>understanding causal inference across three lenses: medical, ML, and broader</li>
-              <li>studying how frontier AI labs approach evaluation and alignment/control research</li>
-              <li>building AI tools for pharma commercial teams at Clariem</li>
-              <li>closing the semester with CBC and the multi-turn safety paper</li>
-            </ul>
-          </div>
-
           <div class="contact-section">
             <a href="#" class="contact-link" id="email-link" data-user="asheoran" data-domain="seas.upenn.edu">asheoran [at] seas.upenn.edu</a>
             <a href="https://github.com/asheorann" target="_blank" rel="noopener" class="contact-link">github</a>
@@ -153,7 +169,7 @@ const featuredProjects = allProjects
         <section class="tab-section" id="home-view">
           <div class="intro-full">
             <p>
-              Master's student in computer science at Penn, previously bioinformatics at UCSD. Currently focused on AI safety in healthcare, specifically how patient-facing AI degrades in safety behavior across multi-turn clinical conversations.
+              Master's student in computer science at Penn, previously bioinformatics at UCSD. Currently working at the intersection of AI and biology, across healthcare policy, single-cell tools, generative models, and AI safety.
             </p>
             <p>
               Outside school, I work at Clariem on AI for pharma and life sciences, and I run the Claude Builder Club at Penn.
@@ -162,6 +178,63 @@ const featuredProjects = allProjects
               I enjoy learning broadly about how the world works, partly because it's fun, partly because it helps me find places where I can contribute. Don't hesitate to reach out :)
             </p>
           </div>
+
+          <!-- Top of Mind Mind-Map Section -->
+          <section class="top-of-mind-section" aria-label="Currently top of mind">
+            <h2 class="section-heading mono-lower">top of mind</h2>
+
+            <!-- Desktop: Mind-map layout -->
+            <div class="mindmap-container" aria-hidden="false">
+              <!-- SVG connections -->
+              <svg class="mindmap-lines" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+                <line class="mindmap-line" x1="200" y1="150" x2="80" y2="60" />
+                <line class="mindmap-line" x1="200" y1="150" x2="320" y2="60" />
+                <line class="mindmap-line" x1="200" y1="150" x2="80" y2="240" />
+                <line class="mindmap-line" x1="200" y1="150" x2="320" y2="240" />
+              </svg>
+
+              <!-- Center label -->
+              <div class="mindmap-center">
+                <span class="mono-lower">AI x Bio</span>
+              </div>
+
+              <!-- Nodes -->
+              <div class="mindmap-nodes">
+                {topOfMindNodes.map((node, index) => (
+                  <div class={`mindmap-node mindmap-node-${index + 1}`} data-node-id={node.id}>
+                    <button
+                      class="mindmap-node-button"
+                      aria-expanded="false"
+                      aria-controls={`blurb-${node.id}`}
+                    >
+                      {node.title}
+                    </button>
+                    <div
+                      class="mindmap-blurb"
+                      id={`blurb-${node.id}`}
+                      role="region"
+                      aria-hidden="true"
+                    >
+                      <p set:html={node.blurb} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <!-- Mobile: Grid/card layout -->
+            <div class="mindmap-mobile">
+              <p class="mindmap-mobile-center mono-lower muted">AI x Bio</p>
+              <div class="mindmap-mobile-grid">
+                {topOfMindNodes.map((node) => (
+                  <div class="mindmap-mobile-card">
+                    <h3>{node.title}</h3>
+                    <p set:html={node.blurb} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
 
           <h2 class="section-heading mono-lower">selected projects</h2>
           {featuredProjects.length > 0 ? (
@@ -293,6 +366,61 @@ const featuredProjects = allProjects
         window.location.href = 'mailto:' + user + '@' + domain;
       });
     }
+
+    // Mind-map node interaction
+    const mindmapNodes = document.querySelectorAll('.mindmap-node-button');
+    let activeNode: HTMLElement | null = null;
+
+    function closeAllBlurbs() {
+      mindmapNodes.forEach(btn => {
+        btn.setAttribute('aria-expanded', 'false');
+        const blurbId = btn.getAttribute('aria-controls');
+        if (blurbId) {
+          const blurb = document.getElementById(blurbId);
+          if (blurb) {
+            blurb.setAttribute('aria-hidden', 'true');
+          }
+        }
+      });
+      activeNode = null;
+    }
+
+    function toggleBlurb(button: HTMLElement) {
+      const isExpanded = button.getAttribute('aria-expanded') === 'true';
+      const blurbId = button.getAttribute('aria-controls');
+      const blurb = blurbId ? document.getElementById(blurbId) : null;
+
+      // Close all others first
+      closeAllBlurbs();
+
+      // If it was closed, open it
+      if (!isExpanded && blurb) {
+        button.setAttribute('aria-expanded', 'true');
+        blurb.setAttribute('aria-hidden', 'false');
+        activeNode = button;
+      }
+    }
+
+    mindmapNodes.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleBlurb(btn as HTMLElement);
+      });
+
+      btn.addEventListener('keydown', (e) => {
+        if ((e as KeyboardEvent).key === 'Escape') {
+          closeAllBlurbs();
+        }
+      });
+    });
+
+    // Close blurbs when clicking outside
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest('.mindmap-node')) {
+        closeAllBlurbs();
+      }
+    });
 
     // Pin toggle functionality
     pinToggle?.addEventListener('click', () => {
@@ -669,6 +797,283 @@ const featuredProjects = allProjects
 
   .intro-aside {
     margin-top: 1.75rem !important;
+  }
+
+  /* Top of Mind Mind-Map Section */
+  .top-of-mind-section {
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  #home-view.animate .top-of-mind-section {
+    animation: fadeInUp 800ms ease forwards;
+    animation-delay: 400ms;
+  }
+
+  .top-of-mind-section .section-heading {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Desktop mind-map container */
+  .mindmap-container {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    background: var(--surface);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  /* SVG connection lines */
+  .mindmap-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .mindmap-line {
+    stroke: var(--border);
+    stroke-width: 1;
+    opacity: 0.5;
+  }
+
+  /* Center label */
+  .mindmap-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+
+  .mindmap-center span {
+    font-size: 0.8125rem;
+    color: var(--accent);
+  }
+
+  /* Node positioning */
+  .mindmap-nodes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .mindmap-node {
+    position: absolute;
+    z-index: 3;
+  }
+
+  /* Expanded node comes to front */
+  .mindmap-node:has(.mindmap-node-button[aria-expanded="true"]) {
+    z-index: 10;
+  }
+
+  /* Position nodes in corners */
+  .mindmap-node-1 { top: 8%; left: 5%; }
+  .mindmap-node-2 { top: 8%; right: 5%; }
+  .mindmap-node-3 { bottom: 8%; left: 5%; }
+  .mindmap-node-4 { bottom: 8%; right: 5%; }
+
+  /* Gentle floating animation */
+  @media (prefers-reduced-motion: no-preference) {
+    .mindmap-node-1 { animation: floatNode1 12s ease-in-out infinite; }
+    .mindmap-node-2 { animation: floatNode2 14s ease-in-out infinite; }
+    .mindmap-node-3 { animation: floatNode3 13s ease-in-out infinite; }
+    .mindmap-node-4 { animation: floatNode4 15s ease-in-out infinite; }
+  }
+
+  @keyframes floatNode1 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(6px, 4px); }
+  }
+
+  @keyframes floatNode2 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-5px, 5px); }
+  }
+
+  @keyframes floatNode3 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(5px, -4px); }
+  }
+
+  @keyframes floatNode4 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-6px, -5px); }
+  }
+
+  /* Node button */
+  .mindmap-node-button {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.5rem 0.75rem;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    transition: border-color 200ms ease, background 200ms ease, box-shadow 200ms ease;
+    max-width: 180px;
+    text-align: left;
+    line-height: 1.3;
+  }
+
+  .mindmap-node-button:hover,
+  .mindmap-node-button:focus {
+    border-color: var(--accent);
+    background: var(--card-bg);
+    outline: none;
+  }
+
+  .mindmap-node-button:focus-visible {
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+
+  .mindmap-node-button[aria-expanded="true"] {
+    border-color: var(--accent);
+    background: var(--card-bg);
+  }
+
+  /* Blurb tooltip */
+  .mindmap-blurb {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 280px;
+    background: var(--surface);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    padding: 1rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition: opacity 200ms ease, transform 200ms ease, visibility 200ms ease;
+    z-index: 10;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  .mindmap-blurb[aria-hidden="false"] {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .mindmap-blurb p {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--text);
+    margin: 0;
+  }
+
+  .mindmap-blurb a {
+    color: var(--accent);
+  }
+
+  /* Adjust blurb position for right-side nodes */
+  .mindmap-node-2 .mindmap-blurb,
+  .mindmap-node-4 .mindmap-blurb {
+    left: auto;
+    right: 0;
+  }
+
+  /* Adjust blurb position for bottom nodes */
+  .mindmap-node-3 .mindmap-blurb,
+  .mindmap-node-4 .mindmap-blurb {
+    top: auto;
+    bottom: calc(100% + 8px);
+    transform: translateY(4px);
+  }
+
+  .mindmap-node-3 .mindmap-blurb[aria-hidden="false"],
+  .mindmap-node-4 .mindmap-blurb[aria-hidden="false"] {
+    transform: translateY(0);
+  }
+
+  /* Mobile layout - hidden on desktop */
+  .mindmap-mobile {
+    display: none;
+  }
+
+  .mindmap-mobile-center {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+  }
+
+  .mindmap-mobile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .mindmap-mobile-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem;
+  }
+
+  .mindmap-mobile-card h3 {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .mindmap-mobile-card p {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .mindmap-mobile-card a {
+    color: var(--accent);
+  }
+
+  /* Tablet breakpoint */
+  @media (max-width: 900px) {
+    .mindmap-node-button {
+      max-width: 150px;
+      font-size: 0.8125rem;
+      padding: 0.4rem 0.6rem;
+    }
+
+    .mindmap-blurb {
+      width: 240px;
+    }
+  }
+
+  /* Mobile breakpoint - switch to cards */
+  @media (max-width: 640px) {
+    .mindmap-container {
+      display: none;
+    }
+
+    .mindmap-mobile {
+      display: block;
+    }
+
+    .mindmap-mobile-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   /* Hero Landing Section */
